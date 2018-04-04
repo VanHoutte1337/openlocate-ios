@@ -1,9 +1,19 @@
 
 ![OpenLocate](http://imageshack.com/a/img922/4800/Pihgqn.png)
 
-We’re building an open SDK to collect location data (like GPS) from phones, for apps like yours
-
 ## Purpose
+
+### Why should you collect location data?
+
+A mobile application should only collect a user’s location information if its user experience depends on or is improved by location awareness. An app that delivers retailer-specific coupons or offers based on a user’s location has a valid reason to ask the user for location permissions.
+
+Protecting user privacy and maintaining trust is paramount. The purpose of OpenLocate is to standardize and simplify the collection of location data by mobile applications that have privacy-compliant and user-centric reasons to do so. 
+
+OpenLocate should not be used solely to collect location data for monetization purposes.
+
+Here are a couple of blog posts that discuss best practices and things to keep in mind when asking a mobile app user for permissions:
+- https://medium.com/product-breakdown/5-ways-to-ask-users-for-ios-permissions-a8e199cc83ad
+- https://uxplanet.org/mobile-ux-design-the-right-ways-to-ask-users-for-permissions-6cdd9ab25c27
 
 ### Why is this project useful?
 
@@ -415,9 +425,9 @@ If you want to have the SDK send data to your own AWS s3 environment for example
 
 ## Location Permission Opt-In Best Practices
 
-OpenLocate requires users to accept the iOS's Location Permission in order to work correctly. It is therefore important to understand when and how to prompt for the location permission in order to maximize opt-in rates from users. OpenLocate takes care of prompting the location permission atomically for you when the `startTracking()` method is invoked. OpenLocate also takes care of remembering this started state across app launches, so you only need to invoke `startTracking()` once. You must decide  the optimal time to invoke `startTracking()` within your app however. Below are several articles that explain the different approaches that can be taken. Ensure you choose one that fits your app’s needs:
+OpenLocate requires users to accept the iOS's Location Permission in order to work correctly. It is therefore important to understand when and how to prompt for the location permission in order to maximize opt-in rates from users. OpenLocate takes care of prompting the location permission atomically for you when the `startTracking()` method is invoked. OpenLocate also takes care of remembering this started state across app launches, so you only need to invoke `startTracking()` once. You must decide  the optimal time to invoke `startTracking()` within your app however. Below are a couple of articles that explain the different approaches that can be taken. Ensure you choose one that fits your app’s needs:
 - https://medium.com/product-breakdown/5-ways-to-ask-users-for-ios-permissions-a8e199cc83ad
-- https://www.doronkatz.com/articles/the-right-way-to-ask-users-for-ios-permissions-medium-1
+- https://uxplanet.org/mobile-ux-design-the-right-ways-to-ask-users-for-permissions-6cdd9ab25c27
 
 ## App Submission with OpenLocate
 OpenLocate collects the advertising ID by default. If this is kept as-is, during the app submission process, please ensure that you disclose that you are collecting the advertising ID and the reason. This requires checking certain checkboxes under the section “Advertising Identifier” in the app store submission form; we recommend checking at least the following options, but you may want to check others depending on your app’s specific usage of the advertising ID.
