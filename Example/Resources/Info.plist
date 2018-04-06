@@ -43,9 +43,9 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Your location is used to personalize content.</string>
 	<key>ProviderId</key>
-	<string>17d375ec-a2ea-11e7-8078-02ae47b9ff6b</string>
+	<string>YOUR_API_KEY</string>
 	<key>Token</key>
-	<string>eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NjYwMzc3NDMsImlhdCI6MTUwODM1Nzc0Mywic2NvcGUiOiJpbmdlc3Q6MTdkMzc1ZWMtYTJlYS0xMWU3LTgwNzgtMDJhZTQ3YjlmZjZiIiwicHJvdmlkZXJfaWQiOiIxN2QzNzVlYy1hMmVhLTExZTctODA3OC0wMmFlNDdiOWZmNmIifQ.4j_J9dBaFoROFZsANvOa1VSTIp4gwUCjeDaAkJiU-Zc</string>
+	<string>YOUR_API_SECRET</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
