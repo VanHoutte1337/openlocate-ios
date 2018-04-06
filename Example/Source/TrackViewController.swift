@@ -64,10 +64,10 @@ class TrackViewController: UIViewController, CLLocationManagerDelegate {
     @IBAction func didChangeAuthPermission(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
             UserDefaults.standard.set(CLAuthorizationStatus.authorizedAlways.rawValue,
-                                      forKey: "authorization_status")
+                                      forKey: "AuthorizationStatus")
         } else {
             UserDefaults.standard.set(CLAuthorizationStatus.authorizedWhenInUse.rawValue,
-                                      forKey: "authorization_status")
+                                      forKey: "AuthorizationStatus")
         }
         UserDefaults.standard.synchronize()
 

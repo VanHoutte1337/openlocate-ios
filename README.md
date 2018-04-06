@@ -37,7 +37,8 @@ Mobile application developers can use location data collected via OpenLocate to:
 OpenLocate is supported by mobile app developers, non-profit trade groups, academia, and leading companies across GIS, logistics, marketing, and more.
 
 ## Requirements
-- iOS 9+
+- XCode 9.0+
+- iOS 8.0+
 
 ## How OpenLocate Works
 

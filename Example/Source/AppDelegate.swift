@@ -49,21 +49,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func configureOpenLocate() {
+
+        UserDefaults.standard.register(defaults: ["TransmissionInterval": Configuration.defaultTransmissionInterval,
+                                                  "AuthorizationStatus": CLAuthorizationStatus.authorizedAlways.rawValue])
+
         if let token = Bundle.main.object(forInfoDictionaryKey: "Token") as? String,
             let uuid = Bundle.main.object(forInfoDictionaryKey: "ProviderId") as? String {
 
             let url = URL(string: "https://api.safegraph.com/v1/provider/\(uuid)/devicelocation")!
             let headers = ["Authorization": "Bearer \(token)"]
+            let transmissionInterval = UserDefaults.standard.double(forKey: "TransmissionInterval")
 
-            let configuration = Configuration(url: url,
-                                              headers: headers,
+            let endpoint = Configuration.Endpoint(url: url, headers: headers)
+            let configuration = Configuration(endpoints: [endpoint],
+                                              transmissionInterval: transmissionInterval,
                                               authorizationStatus: storedAuthorizationStatus())
+
             try? OpenLocate.shared.initialize(with: configuration)
         }
     }
 
     private func storedAuthorizationStatus() -> CLAuthorizationStatus {
-        let authorizationStatusRaw = Int32(UserDefaults.standard.integer(forKey: "authorization_status"))
+        let authorizationStatusRaw = Int32(UserDefaults.standard.integer(forKey: "AuthorizationStatus"))
         return CLAuthorizationStatus(rawValue: authorizationStatusRaw) ?? .authorizedAlways
     }
 

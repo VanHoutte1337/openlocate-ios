@@ -271,27 +271,27 @@ extension OpenLocateLocation {
             super.init()
         }
 
-        required init?(coder aDecoder: NSCoder) {
-            privateTimestamp = aDecoder.decodeDouble(forKey: OpenLocateLocation.Keys.privateTimestamp)
-            latitude = aDecoder.decodeObject(forKey: OpenLocateLocation.Keys.latitude) as? CLLocationDegrees
-            longitude = aDecoder.decodeObject(forKey: OpenLocateLocation.Keys.longitude) as? CLLocationDegrees
-            timestamp = aDecoder.decodeObject(forKey: OpenLocateLocation.Keys.timeStamp) as? TimeInterval
-            timestampReceived = aDecoder.decodeObject(forKey: OpenLocateLocation.Keys.timestampReceived) as? TimeInterval
-            altitude = aDecoder.decodeObject(forKey: OpenLocateLocation.Keys.altitude) as? CLLocationDistance
-            advertisingId = aDecoder.decodeObject(forKey: OpenLocateLocation.Keys.adId) as? String
-            isLimitedAdTrackingEnabled = aDecoder.decodeObject(forKey: OpenLocateLocation.Keys.adOptOut) as? Bool
-            bssid = aDecoder.decodeObject(forKey: OpenLocateLocation.Keys.wifiBssid) as? String
-            ssid = aDecoder.decodeObject(forKey: OpenLocateLocation.Keys.wifissid) as? String
-            context = aDecoder.decodeObject(forKey: OpenLocateLocation.Keys.locationContext) as? String
-            course = aDecoder.decodeObject(forKey: OpenLocateLocation.Keys.course) as? Double
-            speed = aDecoder.decodeObject(forKey: OpenLocateLocation.Keys.speed) as? Double
-            isCharging = aDecoder.decodeObject(forKey: OpenLocateLocation.Keys.isCharging) as? Bool
-            deviceModel = aDecoder.decodeObject(forKey: OpenLocateLocation.Keys.deviceModel) as? String
-            osVersion = aDecoder.decodeObject(forKey: OpenLocateLocation.Keys.osVersion) as? String
+        required init?(coder decoder: NSCoder) {
+            privateTimestamp = decoder.decodeDouble(forKey: OpenLocateLocation.Keys.privateTimestamp)
+            latitude = decoder.decodeObject(forKey: OpenLocateLocation.Keys.latitude) as? CLLocationDegrees
+            longitude = decoder.decodeObject(forKey: OpenLocateLocation.Keys.longitude) as? CLLocationDegrees
+            timestamp = decoder.decodeObject(forKey: OpenLocateLocation.Keys.timeStamp) as? TimeInterval
+            timestampReceived = decoder.decodeObject(forKey: OpenLocateLocation.Keys.timestampReceived) as? TimeInterval
+            altitude = decoder.decodeObject(forKey: OpenLocateLocation.Keys.altitude) as? CLLocationDistance
+            advertisingId = decoder.decodeObject(forKey: OpenLocateLocation.Keys.adId) as? String
+            isLimitedAdTrackingEnabled = decoder.decodeObject(forKey: OpenLocateLocation.Keys.adOptOut) as? Bool
+            bssid = decoder.decodeObject(forKey: OpenLocateLocation.Keys.wifiBssid) as? String
+            ssid = decoder.decodeObject(forKey: OpenLocateLocation.Keys.wifissid) as? String
+            context = decoder.decodeObject(forKey: OpenLocateLocation.Keys.locationContext) as? String
+            course = decoder.decodeObject(forKey: OpenLocateLocation.Keys.course) as? Double
+            speed = decoder.decodeObject(forKey: OpenLocateLocation.Keys.speed) as? Double
+            isCharging = decoder.decodeObject(forKey: OpenLocateLocation.Keys.isCharging) as? Bool
+            deviceModel = decoder.decodeObject(forKey: OpenLocateLocation.Keys.deviceModel) as? String
+            osVersion = decoder.decodeObject(forKey: OpenLocateLocation.Keys.osVersion) as? String
             horizontalAccuracy
-                = aDecoder.decodeObject(forKey: OpenLocateLocation.Keys.horizontalAccuracy) as? CLLocationAccuracy
+                = decoder.decodeObject(forKey: OpenLocateLocation.Keys.horizontalAccuracy) as? CLLocationAccuracy
             verticalAccuracy
-                = aDecoder.decodeObject(forKey: OpenLocateLocation.Keys.verticalAccuracy) as? CLLocationAccuracy
+                = decoder.decodeObject(forKey: OpenLocateLocation.Keys.verticalAccuracy) as? CLLocationAccuracy
 
             super.init()
         }

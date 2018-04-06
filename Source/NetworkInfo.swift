@@ -33,8 +33,8 @@ public struct NetworkInfo {
     static func currentNetworkInfo() -> NetworkInfo {
         var networkInfo = NetworkInfo()
         if let interface = CNCopySupportedInterfaces() {
-            for i in 0..<CFArrayGetCount(interface) {
-                let interfaceName: UnsafeRawPointer = CFArrayGetValueAtIndex(interface, i)
+            for index in 0..<CFArrayGetCount(interface) {
+                let interfaceName: UnsafeRawPointer = CFArrayGetValueAtIndex(interface, index)
                 let rec = unsafeBitCast(interfaceName, to: AnyObject.self)
                 if let unsafeInterfaceData = CNCopyCurrentNetworkInfo("\(rec)" as CFString),
                     let interfaceData = unsafeInterfaceData as? [String: AnyObject] {

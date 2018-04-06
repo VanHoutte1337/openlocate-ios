@@ -33,6 +33,8 @@ protocol LocationServiceType {
     func start()
     func stop()
 
+    func postData(onComplete: ((Bool) -> Void)?)
+
     func backgroundFetchLocation(onCompletion: @escaping ((Bool) -> Void))
 }
 
@@ -170,12 +172,12 @@ extension LocationService {
             }
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 4.0, execute: { [weak self] in
-                self?.postLocations()
+                self?.postData()
             })
         }
     }
 
-    private func postLocations() {
+    func postData(onComplete: ((Bool) -> Void)? = nil) {
 
         if isPostingLocations == true || endpoints.isEmpty { return }
 
@@ -183,6 +185,7 @@ extension LocationService {
 
         beginBackgroundTask()
 
+        var isSuccessfull = true
         let endingDate = Calendar.current.date(byAdding: .second, value: -1, to: Date()) ?? Date()
         for endpoint in endpoints {
             dispatchGroup.enter()
@@ -205,11 +208,13 @@ extension LocationService {
                     },
                     failure: { [weak self] _, error in
                         debugPrint("failure in posting locations!!! Error: \(error)")
+                        isSuccessfull = false
                         self?.dispatchGroup.leave()
                     }
                 )
             } catch let error {
                 print(error.localizedDescription)
+                isSuccessfull = false
                 dispatchGroup.leave()
             }
         }
@@ -221,6 +226,10 @@ extension LocationService {
             strongSelf.locationDataSource.clear(before: strongSelf.transmissionDateCutoff())
             strongSelf.isPostingLocations = false
             strongSelf.endBackgroundTask()
+
+            if let onComplete = onComplete {
+                onComplete(isSuccessfull)
+            }
         }
     }
 

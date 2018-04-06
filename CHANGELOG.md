@@ -2,6 +2,14 @@
 
 `OpenLocate-iOS` adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.0](https://github.com/OpenLocate/openlocate-ios/tag/1.3.0)
+
+#### Added
+
+- Add support for iOS 8.0
+- Add Settings tab to Example app to allow transmission interval to be changed
+- Add button in Settings to force data upload
+
 ## [1.2.1](https://github.com/OpenLocate/openlocate-ios/tag/1.2.1)
 
 #### Fix

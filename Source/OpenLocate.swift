@@ -37,6 +37,8 @@ private protocol OpenLocateType {
     func startTracking()
     func stopTracking()
 
+    func sendData(onCompletion: @escaping (Bool) -> Void)
+
     func fetchCurrentLocation(completion: LocationCompletionHandler) throws
 }
 
@@ -138,6 +140,16 @@ extension OpenLocate {
             .build()
 
         return advertisingInfo
+    }
+
+    public func sendData(onCompletion: @escaping (Bool) -> Void) {
+        if let locationService = self.locationService {
+            locationService.postData(onComplete: { (isSuccessfull) in
+                onCompletion(isSuccessfull)
+            })
+        } else {
+            onCompletion(false)
+        }
     }
 }
 

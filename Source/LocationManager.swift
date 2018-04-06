@@ -44,13 +44,13 @@ final class LocationManager: NSObject, LocationManagerType, CLLocationManagerDel
     static let visitRegionIdentifier = "VisitRegion"
     static let minimumVisitRegionRadius = 25.0
 
-    private let manager: CLLocationManagerType
+    private let manager: CLLocationManager
     private let requestAuthorizationStatus: CLAuthorizationStatus
 
     private var requests: [LocationsHandler] = []
     private var fetchLocationCompletionHandler: ((Bool) -> Void)?
 
-    required init(manager: CLLocationManagerType = CLLocationManager(),
+    required init(manager: CLLocationManager = CLLocationManager(),
                   requestAuthorizationStatus: CLAuthorizationStatus) {
         self.manager = manager
         self.requestAuthorizationStatus = requestAuthorizationStatus
@@ -70,7 +70,11 @@ final class LocationManager: NSObject, LocationManagerType, CLLocationManagerDel
     }
 
     func fetchLocation(onCompletion: @escaping ((Bool) -> Void)) {
-        manager.requestLocation()
+        if #available(iOS 9.0, *) {
+            manager.requestLocation()
+        } else {
+            manager.startUpdatingLocation()
+        }
         self.fetchLocationCompletionHandler = onCompletion
     }
 
@@ -114,6 +118,10 @@ final class LocationManager: NSObject, LocationManagerType, CLLocationManagerDel
         if let fetchLocationCompletionHandler = self.fetchLocationCompletionHandler {
             fetchLocationCompletionHandler(true)
             self.fetchLocationCompletionHandler = nil
+            if #available(iOS 9.0, *) {
+            } else {
+                manager.stopUpdatingLocation()
+            }
         }
     }
 
@@ -172,10 +180,12 @@ final class LocationManager: NSObject, LocationManagerType, CLLocationManagerDel
     // MARK: Private
 
     private func startMonitoringVisitRegion(with coordinate: CLLocationCoordinate2D, maxRadius: CLLocationDistance) {
-        let region = CLCircularRegion(center: coordinate,
-                                      radius: max(LocationManager.minimumVisitRegionRadius, maxRadius),
-                                      identifier: LocationManager.visitRegionIdentifier)
-        manager.startMonitoring(for: region)
+        if CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
+            let region = CLCircularRegion(center: coordinate,
+                                          radius: max(LocationManager.minimumVisitRegionRadius, maxRadius),
+                                          identifier: LocationManager.visitRegionIdentifier)
+            manager.startMonitoring(for: region)
+        }
     }
 
     private func stopMonitoringVisitRegion() {

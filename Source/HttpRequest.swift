@@ -64,9 +64,9 @@ extension Dictionary where Dictionary.Key == String, Dictionary.Value == String 
     var queryString: String {
         var urlVars: [String] = []
 
-        for (k, value) in self {
+        for (key, value) in self {
             if let encodedValue = value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
-                urlVars.append(k + "=" + encodedValue)
+                urlVars.append(key + "=" + encodedValue)
             }
         }
 

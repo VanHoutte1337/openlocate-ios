@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11BDC477205102930056B6AC /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BDC476205102930056B6AC /* SettingsViewController.swift */; };
+		11BDC479205106700056B6AC /* TransmissionIntervalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BDC478205106700056B6AC /* TransmissionIntervalViewController.swift */; };
 		4897011B1F04F7CA00D8C27C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4897011A1F04F7CA00D8C27C /* AppDelegate.swift */; };
 		489701241F04F7ED00D8C27C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4897011D1F04F7ED00D8C27C /* Assets.xcassets */; };
 		489701281F04F8C000D8C27C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4897011F1F04F7ED00D8C27C /* LaunchScreen.storyboard */; };
@@ -32,6 +34,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		11BDC476205102930056B6AC /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = Source/SettingsViewController.swift; sourceTree = "<group>"; };
+		11BDC478205106700056B6AC /* TransmissionIntervalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TransmissionIntervalViewController.swift; path = Source/TransmissionIntervalViewController.swift; sourceTree = "<group>"; };
 		326819F92D49F85C167CCB5D /* Pods-iOS Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS Example.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-iOS Example/Pods-iOS Example.debug.xcconfig"; sourceTree = "<group>"; };
 		4897011A1F04F7CA00D8C27C /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Source/AppDelegate.swift; sourceTree = "<group>"; };
 		4897011D1F04F7ED00D8C27C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
@@ -82,6 +86,8 @@
 			children = (
 				4897011A1F04F7CA00D8C27C /* AppDelegate.swift */,
 				48A0D5E71F4706E900E12C54 /* TrackViewController.swift */,
+				11BDC476205102930056B6AC /* SettingsViewController.swift */,
+				11BDC478205106700056B6AC /* TransmissionIntervalViewController.swift */,
 				4897011C1F04F7CF00D8C27C /* Supporting Files */,
 			);
 			name = Source;
@@ -149,7 +155,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = OpenLocate;
 				TargetAttributes = {
 					489701011F04F6A900D8C27C = {
@@ -284,6 +290,8 @@
 			files = (
 				48A0D5E81F4706E900E12C54 /* TrackViewController.swift in Sources */,
 				4897011B1F04F7CA00D8C27C /* AppDelegate.swift in Sources */,
+				11BDC479205106700056B6AC /* TransmissionIntervalViewController.swift in Sources */,
+				11BDC477205102930056B6AC /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,6 +331,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -330,6 +339,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -356,7 +366,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -379,6 +389,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -386,6 +397,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -406,7 +418,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -418,12 +430,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 326819F92D49F85C167CCB5D /* Pods-iOS Example.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2018.03.04.14.19.09;
+				CURRENT_PROJECT_VERSION = 2018.04.04.23.09;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = N7C984W2M5;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
@@ -442,12 +453,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FC74795B2F74CB8DF4C70A5D /* Pods-iOS Example.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2018.03.04.14.19.09;
+				CURRENT_PROJECT_VERSION = 2018.04.04.23.09;
 				DEVELOPMENT_TEAM = N7C984W2M5;
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
