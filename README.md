@@ -66,7 +66,7 @@ pod 'OpenLocate'
 
 ### Initialize tracking
 
-1. Add permission keys for location tracking in the `Info.plist` of your application. **Be sure to fill in your app name where appropriate (or edit the string as you see fit)**
+1. Add appropriate location usage descriptions to the `Info.plist` of your application. **Be sure to fill in your app name where appropriate (or edit the string as you see fit)**
 
 For **Xcode 9:**
 ```xml
@@ -78,16 +78,6 @@ For **Xcode 9:**
 <string>[App_name] would like to access location.</string>
 ```
 
-If you are using **Xcode 8** you need one of these keys:
-```xml
-<key>NSLocationAlwaysUsageDescription</key>
-<string>[App_name] would like to access location.</string>
-```
-```xml
-<key>NSLocationWhenInUseUsageDescription</key>
-<string>[App_name] would like to access location.</string>
-```
-
 2. Configure where the SDK should send data to by building the configuration with appropriate URL and headers. Supply the configuration to the `initialize` method. Ensure that the initialize method is invoked in the `application:didFinishLaunchingWithOptions:` method in your `UIApplicationDelegate`
 
 #### For example, to send data to SafeGraph:
@@ -95,6 +85,8 @@ If you are using **Xcode 8** you need one of these keys:
 Assuming you have a UUID and token from SafeGraph:
 
 ```swift
+import openlocate
+
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]? ) -> Bool {
 
     let uuid = UUID(uuidString: "<YOUR_UUID>")!
@@ -103,7 +95,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
     let url = URL(string: "https://api.safegraph.com/v1/provider/\(uuid)/devicelocation")!
     let headers = ["Authorization": "Bearer \(token)"]
     
-    let configuration = Configuration(url: url, headers: headers)
+    let configuration = Configuration(url: url, headers: headers, authorizationStatus: .authorizedAlways)
     
     do {
         try OpenLocate.shared.initialize(with: configuration)
@@ -426,7 +418,7 @@ If you want to have the SDK send data to your own AWS s3 environment for example
 
 ## Location Permission Opt-In Best Practices
 
-OpenLocate requires users to accept the iOS's Location Permission in order to work correctly. It is therefore important to understand when and how to prompt for the location permission in order to maximize opt-in rates from users. OpenLocate takes care of prompting the location permission atomically for you when the `startTracking()` method is invoked. OpenLocate also takes care of remembering this started state across app launches, so you only need to invoke `startTracking()` once. You must decide  the optimal time to invoke `startTracking()` within your app however. Below are a couple of articles that explain the different approaches that can be taken. Ensure you choose one that fits your app’s needs:
+OpenLocate requires users to accept the iOS's Location Permission in order to work correctly. It is therefore important to understand when and how to prompt for the location permission in order to maximize opt-in rates from users. OpenLocate takes care of prompting the location permission for you when the `startTracking()` method is invoked. OpenLocate also takes care of remembering this started state across app launches, so you only need to invoke `startTracking()` once. You must decide  the optimal time to invoke `startTracking()` within your app however. Below are several articles that explain the different approaches that can be taken. Ensure you choose one that fits your app’s needs:
 - https://medium.com/product-breakdown/5-ways-to-ask-users-for-ios-permissions-a8e199cc83ad
 - https://uxplanet.org/mobile-ux-design-the-right-ways-to-ask-users-for-permissions-6cdd9ab25c27
 
