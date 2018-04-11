@@ -167,7 +167,7 @@ extension LocationService {
             abs(createdAt.timeIntervalSinceNow) > self.transmissionInterval {
 
             if let lastTransmissionDate = self.lastTransmissionDate,
-                lastTransmissionDate.timeIntervalSinceNow < self.transmissionInterval / 2 {
+                abs(lastTransmissionDate.timeIntervalSinceNow) < self.transmissionInterval / 2 {
                 return
             }
 

@@ -2,6 +2,12 @@
 
 `OpenLocate-iOS` adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.1](https://github.com/OpenLocate/openlocate-ios/tag/1.3.1)
+
+#### Fix
+
+- Fix issue where location data is not posted at the correct transmission interval. (#86)
+
 ## [1.3.0](https://github.com/OpenLocate/openlocate-ios/tag/1.3.0)
 
 #### Added
