@@ -40,6 +40,8 @@ private protocol OpenLocateType {
     func sendData(onCompletion: @escaping (Bool) -> Void)
 
     func fetchCurrentLocation(completion: LocationCompletionHandler) throws
+    
+    func getJSON(_ location: OpenLocateLocation) -> Any
 }
 
 public final class OpenLocate: OpenLocateType {
@@ -102,6 +104,11 @@ extension OpenLocate {
 
         service.stop()
     }
+    
+    public func getJSON(_ location: OpenLocateLocation) -> Any {
+        return location.json
+    }
+
 
     public var isTrackingEnabled: Bool {
         guard let locationService = self.locationService else { return false }
