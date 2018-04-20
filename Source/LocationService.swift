@@ -170,8 +170,13 @@ extension LocationService {
                 abs(lastTransmissionDate.timeIntervalSinceNow) < self.transmissionInterval / 2 {
                 return
             }
+                
+            if isPostingLocations {
+                return
+            }
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 4.0, execute: { [weak self] in
+
+            DispatchQueue.main.asyncAfter(deadline: .now(), execute: { [weak self] in
                 self?.postData()
             })
         }
