@@ -11,6 +11,13 @@ DEPENDENCIES:
   - Fabric
   - SwiftLint
 
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - Crashlytics
+    - Fabric
+    - SwiftLint
+
 SPEC CHECKSUMS:
   Alamofire: 68d7d521118d49c615a8d2214d87cdf525599d30
   Crashlytics: dfbae35ef22ca189240d230ad501feea4ee85d2d
@@ -19,4 +26,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 7c84d7da60fc2d5fb050fad11ba25e07aa38a714
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.0

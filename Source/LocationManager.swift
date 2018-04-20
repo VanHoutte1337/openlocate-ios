@@ -25,50 +25,51 @@
 import Foundation
 import CoreLocation
 
-typealias LocationsHandler = ([(location: CLLocation, context: OpenLocateLocation.Context)]) -> Void
+public typealias LocationsHandler = ([(location: CLLocation, context: OpenLocateLocation.Context)]) -> Void
 
 // Location Manager
 
-protocol LocationManagerType {
+public protocol LocationManagerType {
     func subscribe(_ locationHandler: @escaping LocationsHandler)
     func cancel()
-
+    
     var updatingLocation: Bool { get }
     var lastLocation: CLLocation? { get }
-
+    var minimumVisitRegionRadius: Double { get set }
+    
     func fetchLocation(onCompletion: @escaping ((Bool) -> Void))
 }
 
 final class LocationManager: NSObject, LocationManagerType, CLLocationManagerDelegate {
-
+    
     static let visitRegionIdentifier = "VisitRegion"
-    static let minimumVisitRegionRadius = 25.0
-
+    public var minimumVisitRegionRadius: Double = 25.0
+    
     private let manager: CLLocationManager
     private let requestAuthorizationStatus: CLAuthorizationStatus
-
+    
     private var requests: [LocationsHandler] = []
     private var fetchLocationCompletionHandler: ((Bool) -> Void)?
-
+    
     required init(manager: CLLocationManager = CLLocationManager(),
                   requestAuthorizationStatus: CLAuthorizationStatus) {
         self.manager = manager
         self.requestAuthorizationStatus = requestAuthorizationStatus
-
+        
         super.init()
-
+        
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
     }
-
+    
     static func authorizationStatus() -> CLAuthorizationStatus {
         return CLLocationManager.authorizationStatus()
     }
-
+    
     static func locationServicesEnabled() -> Bool {
         return CLLocationManager.locationServicesEnabled()
     }
-
+    
     func fetchLocation(onCompletion: @escaping ((Bool) -> Void)) {
         if #available(iOS 9.0, *) {
             manager.requestLocation()
@@ -77,40 +78,40 @@ final class LocationManager: NSObject, LocationManagerType, CLLocationManagerDel
         }
         self.fetchLocationCompletionHandler = onCompletion
     }
-
+    
     // MARK: CLLocationManager
-
+    
     func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
         var date = Date()
         var context = OpenLocateLocation.Context.unknown
         if visit.departureDate != Date.distantFuture {
             date = visit.departureDate
             context = .visitExit
-
+            
             startMonitoringVisitRegion(with: visit.coordinate, maxRadius: visit.horizontalAccuracy)
         } else if visit.arrivalDate != Date.distantPast {
             date = visit.arrivalDate
             context = .visitEntry
-
+            
             stopMonitoringVisitRegion()
         }
-
+        
         let location = CLLocation(coordinate: visit.coordinate,
                                   altitude: 0,
                                   horizontalAccuracy: visit.horizontalAccuracy,
                                   verticalAccuracy: -1.0,
                                   timestamp: date)
-
+        
         var locations = [(location: location, context: context)]
         if let currentLocation = manager.location {
             locations.append((location: currentLocation, context: .passive))
         }
-
+        
         for request in requests {
             request(locations)
         }
     }
-
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         for request in requests {
             request(locations.map({return (location: $0, context: OpenLocateLocation.Context.backgroundFetch)}))
@@ -124,7 +125,7 @@ final class LocationManager: NSObject, LocationManagerType, CLLocationManagerDel
             }
         }
     }
-
+    
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         if let location = manager.location {
             for request in requests {
@@ -132,7 +133,7 @@ final class LocationManager: NSObject, LocationManagerType, CLLocationManagerDel
             }
         }
     }
-
+    
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
         if let location = manager.location {
             for request in requests {
@@ -143,22 +144,22 @@ final class LocationManager: NSObject, LocationManagerType, CLLocationManagerDel
             }
         }
     }
-
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         debugPrint(error)
-
+        
         if let fetchLocationCompletionHandler = self.fetchLocationCompletionHandler {
             fetchLocationCompletionHandler(false)
             self.fetchLocationCompletionHandler = nil
         }
     }
-
+    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         updateRunningLocationServicesForAuthorizationStatus(status)
     }
-
+    
     // MARK: LocationManagerType
-
+    
     func subscribe(_ locationHandler: @escaping LocationsHandler) {
         if requests.isEmpty {
             requests.append(locationHandler)
@@ -166,33 +167,33 @@ final class LocationManager: NSObject, LocationManagerType, CLLocationManagerDel
         requestAuthorizationIfNeeded()
         updateRunningLocationServicesForAuthorizationStatus(LocationManager.authorizationStatus())
     }
-
+    
     func cancel() {
         requests.removeAll()
         manager.stopMonitoringVisits()
         manager.stopMonitoringSignificantLocationChanges()
     }
-
+    
     var updatingLocation: Bool {
         return !requests.isEmpty
     }
-
+    
     // MARK: Private
-
+    
     private func startMonitoringVisitRegion(with coordinate: CLLocationCoordinate2D, maxRadius: CLLocationDistance) {
         if CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
             let region = CLCircularRegion(center: coordinate,
-                                          radius: max(LocationManager.minimumVisitRegionRadius, maxRadius),
+                                          radius: self.minimumVisitRegionRadius,
                                           identifier: LocationManager.visitRegionIdentifier)
             manager.startMonitoring(for: region)
         }
     }
-
+    
     private func stopMonitoringVisitRegion() {
         let regions = manager.monitoredRegions.filter({ $0.identifier == LocationManager.visitRegionIdentifier })
         regions.forEach { manager.stopMonitoring(for: $0) }
     }
-
+    
     private func updateRunningLocationServicesForAuthorizationStatus(_ status: CLAuthorizationStatus) {
         if status == .authorizedAlways && requestAuthorizationStatus == .authorizedAlways && updatingLocation {
             manager.startMonitoringVisits()
@@ -202,7 +203,7 @@ final class LocationManager: NSObject, LocationManagerType, CLLocationManagerDel
             manager.stopMonitoringSignificantLocationChanges()
         }
     }
-
+    
     private func requestAuthorizationIfNeeded() {
         let status = CLLocationManager.authorizationStatus()
         switch status {
@@ -220,7 +221,7 @@ final class LocationManager: NSObject, LocationManagerType, CLLocationManagerDel
             break
         }
     }
-
+    
     var lastLocation: CLLocation? {
         return manager.location
     }

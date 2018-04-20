@@ -27,49 +27,50 @@ import AdSupport
 
 public typealias LocationCompletionHandler = (OpenLocateLocation?, Error?) -> Void
 
-private protocol OpenLocateType {
+protocol OpenLocateType {
     static var shared: OpenLocate { get }
-
+    
+    var locationService: LocationServiceType? {get set}
     var isTrackingEnabled: Bool { get }
-
+    
     func initialize(with configuration: Configuration) throws
-
+    
     func startTracking()
     func stopTracking()
-
+    
     func sendData(onCompletion: @escaping (Bool) -> Void)
-
+    
     func fetchCurrentLocation(completion: LocationCompletionHandler) throws
     
     func getJSON(_ location: OpenLocateLocation) -> Any
 }
 
-public final class OpenLocate: OpenLocateType {
-
-    private var locationService: LocationServiceType?
-
+public class OpenLocate: OpenLocateType {
+    
+    public var locationService: LocationServiceType?
+    
     fileprivate var configuration: Configuration?
-
+    
     public static let shared = OpenLocate()
 }
 
 extension OpenLocate {
     private func initLocationService(configuration: Configuration) {
         let httpClient = HttpClient()
-
+        
         let locationDataSource: LocationDataSourceType
-
+        
         do {
             let database = try SQLiteDatabase.openLocateDatabase()
             locationDataSource = LocationDatabase(database: database)
         } catch {
             locationDataSource = LocationList()
         }
-
+        
         let locationManager = LocationManager(requestAuthorizationStatus: configuration.authorizationStatus)
-
+        
         self.configuration = configuration
-
+        
         self.locationService = LocationService(
             postable: httpClient,
             locationDataSource: locationDataSource,
@@ -79,43 +80,43 @@ extension OpenLocate {
             transmissionInterval: configuration.transmissionInterval,
             logConfiguration: configuration.collectingFieldsConfiguration
         )
-
+        
         if let locationService = self.locationService, locationService.isStarted {
             locationService.start()
         }
     }
-
+    
     public func initialize(with configuration: Configuration) throws {
         try validateLocationAuthorizationKeys()
-
+        
         initLocationService(configuration: configuration)
     }
-
+    
     public func startTracking() {
         locationService?.start()
     }
-
+    
     public func stopTracking() {
         guard let service = locationService else {
             debugPrint("Trying to stop server even if it was never started.")
-
+            
             return
         }
-
+        
         service.stop()
     }
     
     public func getJSON(_ location: OpenLocateLocation) -> Any {
         return location.json
     }
-
-
+    
+    
     public var isTrackingEnabled: Bool {
         guard let locationService = self.locationService else { return false }
-
+        
         return locationService.isStarted
     }
-
+    
     public func performFetchWithCompletionHandler(_ completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         guard let locationService = self.locationService, locationService.isStarted else {
             completionHandler(.noData)
@@ -129,26 +130,26 @@ extension OpenLocate {
             }
         }
     }
-
+    
     private var advertisingInfo: AdvertisingInfo {
         let manager = ASIdentifierManager.shared()
-
+        
         var advertisingId: String?
         var isLimitedAdTrackingEnabled: Bool?
-
+        
         if let shouldLogAdId = configuration?.collectingFieldsConfiguration.shouldLogAdId, shouldLogAdId {
             advertisingId = manager.advertisingIdentifier.uuidString
             isLimitedAdTrackingEnabled = !manager.isAdvertisingTrackingEnabled
         }
-
+        
         let advertisingInfo = AdvertisingInfo.Builder()
             .set(advertisingId: advertisingId)
             .set(isLimitedAdTrackingEnabled: isLimitedAdTrackingEnabled)
             .build()
-
+        
         return advertisingInfo
     }
-
+    
     public func sendData(onCompletion: @escaping (Bool) -> Void) {
         if let locationService = self.locationService {
             locationService.postData(onComplete: { (isSuccessfull) in
@@ -163,25 +164,25 @@ extension OpenLocate {
 extension OpenLocate {
     public func fetchCurrentLocation(completion: (OpenLocateLocation?, Error?) -> Void) throws {
         try validateLocationAuthorizationKeys()
-
+        
         let manager = LocationManager(requestAuthorizationStatus: .authorizedWhenInUse)
         let lastLocation = manager.lastLocation
-
+        
         guard let location = lastLocation else {
             completion(
                 nil,
                 OpenLocateError.locationFailure(message: OpenLocateError.ErrorMessage.noCurrentLocationExists))
             return
         }
-
+        
         let fieldsConfiguration = configuration?.collectingFieldsConfiguration ?? .default
-
+        
         let fieldsContainer = CollectingFields.Builder(configuration: fieldsConfiguration)
             .set(location: location)
             .set(network: NetworkInfo.currentNetworkInfo())
             .set(deviceInfo: DeviceCollectingFields.configure(with: fieldsConfiguration))
             .build()
-
+        
         let openlocateLocation = OpenLocateLocation(timestamp: location.timestamp,
                                                     advertisingInfo: advertisingInfo,
                                                     collectingFields: fieldsContainer)
