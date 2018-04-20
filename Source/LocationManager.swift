@@ -88,12 +88,12 @@ final class LocationManager: NSObject, LocationManagerType, CLLocationManagerDel
             date = visit.departureDate
             context = .visitExit
             
-            startMonitoringVisitRegion(with: visit.coordinate, maxRadius: visit.horizontalAccuracy)
+            stopMonitoringVisitRegion()
         } else if visit.arrivalDate != Date.distantPast {
             date = visit.arrivalDate
             context = .visitEntry
             
-            stopMonitoringVisitRegion()
+            startMonitoringVisitRegion(with: visit.coordinate, maxRadius: visit.horizontalAccuracy)
         }
         
         let location = CLLocation(coordinate: visit.coordinate,
