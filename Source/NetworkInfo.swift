@@ -24,11 +24,13 @@
 
 import Foundation
 import SystemConfiguration.CaptiveNetwork
+import CoreTelephony
 
 public struct NetworkInfo {
 
     var bssid: String?
     var ssid: String?
+    var carrierName: String?
 
     static func currentNetworkInfo() -> NetworkInfo {
         var networkInfo = NetworkInfo()
@@ -44,6 +46,9 @@ public struct NetworkInfo {
                     // not connected wifi
                 }
             }
+        }
+        if let carrierName = CTTelephonyNetworkInfo().subscriberCellularProvider?.carrierName {
+            networkInfo.carrierName = carrierName
         }
         return networkInfo
     }

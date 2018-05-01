@@ -354,6 +354,7 @@ func pushLocationToDataDrop(location: OpenLocateLocation) {
 |horizontal_accuracy|Float|The radius of uncertainty for the location, measured in meters.|CollectingFieldsConfiguration.shouldLogHorizontalAccuracy|
 |veritcal_accuracy|Float|The accuracy of the altitude value, measured in meters.|CollectingFieldsConfiguration.shouldLogHorizontalAccuracy|
 |altitude|Float|The altitude, measured in meters.|CollectingFieldsConfiguration.shouldLogAltitude|
+|carrier_name|String|A string value representing the carrier name|CollectingFieldsConfiguration.shouldLogNetworkInfo|
 |wifi_bssid|String|A string value representing the bssid of the wifi to which the device is connected to|CollectingFieldsConfiguration.shouldLogNetworkInfo|
 |wifi_ssid|String|A string value representing the ssis of the wifi to which the device is connected to|CollectingFieldsConfiguration.shouldLogNetworkInfo|
 |location_context|String|A string value representing the state of the location when it was collected. Possible value - `unknown`, `passive`, `regular`, `visit_entry`, `visit_exit`|CollectingFieldsConfiguration.shouldLogLocation|
@@ -381,6 +382,7 @@ This is a sample request body sent by the SDK.
 			"horizontal_accuracy": 12.323,
 			"vertical_accuracy": 5.3,
 			"altitude": 0.456,
+           		"carrier_name": "T Mobile",
 			"wifi_ssid": "OpenLocate_Guest",
 			"wifi_bssid": "OpenLocate_Guest",
 			"location_context": "regular",
@@ -401,6 +403,7 @@ This is a sample request body sent by the SDK.
 			"horizontal_accuracy": 12.323,
 			"vertical_accuracy": 5.3,
 			"altitude": 0.456,
+           		"carrier_name": "T Mobile",
 			"wifi_ssid": "OpenLocate_Guest",
 			"wifi_bssid": "OpenLocate_Guest",
 			"location_context": "regular",
