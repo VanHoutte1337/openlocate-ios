@@ -427,9 +427,9 @@ OpenLocate requires users to accept the iOS's Location Permission in order to wo
 
 ## App Submission with OpenLocate
 OpenLocate collects the advertising ID by default. If this is kept as-is, during the app submission process, please ensure that you disclose that you are collecting the advertising ID and the reason. This requires checking certain checkboxes under the section “Advertising Identifier” in the app store submission form; we recommend checking at least the following options, but you may want to check others depending on your app’s specific usage of the advertising ID.
-Attribute this app installation to a previously served advertisement
-Attribute an action taken within this app to a previously served advertisement
-Limit Ad Tracking pledge: i.e. that the limit ad tracking setting will be honoured appropriately (see app submission form for more details)
+* Attribute this app installation to a previously served advertisement
+* Attribute an action taken within this app to a previously served advertisement
+* Limit Ad Tracking pledge: i.e. that the limit ad tracking setting will be honoured appropriately (see app submission form for more details)
 
 ## Communication
 
