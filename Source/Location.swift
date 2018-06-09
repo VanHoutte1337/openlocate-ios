@@ -138,6 +138,14 @@ extension OpenLocateLocation {
         if let horizontalAccuracy = locationFields.horizontalAccuracy {
             jsonParameters[Keys.horizontalAccuracy] = horizontalAccuracy
         }
+        
+        if let altitude = locationFields.altitude {
+            jsonParameters[Keys.altitude] = altitude
+        }
+        
+        if let verticalAccuracy = locationFields.verticalAccuracy {
+            jsonParameters[Keys.verticalAccuracy] = verticalAccuracy
+        }
 
         if let bssid = networkInfo.bssid {
             jsonParameters[Keys.wifiBssid] = bssid

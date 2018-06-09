@@ -382,7 +382,7 @@ This is a sample request body sent by the SDK.
 			"horizontal_accuracy": 12.323,
 			"vertical_accuracy": 5.3,
 			"altitude": 0.456,
-           		"carrier_name": "T Mobile",
+           "carrier_name": "T Mobile",
 			"wifi_ssid": "OpenLocate_Guest",
 			"wifi_bssid": "OpenLocate_Guest",
 			"location_context": "regular",
