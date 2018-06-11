@@ -187,7 +187,9 @@ extension LocationService {
                 self?.postData()
             })
         }
-        LoggingService.shared.log("Stopped trying to post location because: we are still in the same interval")
+        else {
+            LoggingService.shared.log("Stopped trying to post location because: we are still in the same interval")
+        }
     }
     
     func postData(onComplete: ((Bool) -> Void)? = nil) {
@@ -218,11 +220,11 @@ extension LocationService {
                 try httpClient.post(
                     parameters: requestParameters,
                     success: {  [weak self] _, _ in
+                        LoggingService.shared.log("Succesfully posted \(locations.count) locations")
                         if let lastLocation = locations.last, let createdAt = lastLocation.createdAt {
                             self?.setLastKnownTransmissionDate(for: endpoint, with: createdAt)
                         }
                         self?.dispatchGroup.leave()
-                        LoggingService.shared.log("Succesfully posted \(locations.count) locations")
                     },
                     failure: { [weak self] _, error in
                         debugPrint("failure in posting locations!!! Error: \(error)")
