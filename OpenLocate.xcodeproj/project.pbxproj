@@ -38,6 +38,7 @@
 		48E45DEF1F09384C006EAF6F /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E45DEE1F09384B006EAF6F /* Location.swift */; };
 		48E45DF11F094506006EAF6F /* LocationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E45DF01F094506006EAF6F /* LocationTests.swift */; };
 		48F0DCC71F3B3A89004C4943 /* HttpResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F0DCC61F3B3A89004C4943 /* HttpResponseTests.swift */; };
+		C79055F420CE86E10057E7F3 /* LoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79055F320CE86E10057E7F3 /* LoggingService.swift */; };
 		DE2440ED1F7FD5D0006E4C0E /* DeviceCollectingFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2440EC1F7FD5D0006E4C0E /* DeviceCollectingFields.swift */; };
 		DE4B15BD1F8A729A00ABDEC0 /* CollectingFieldsConfigurationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4B15BC1F8A729A00ABDEC0 /* CollectingFieldsConfigurationBuilder.swift */; };
 		DE71EDCB1F893D590064020A /* LocationCollectingFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE71EDCA1F893D590064020A /* LocationCollectingFields.swift */; };
@@ -93,6 +94,7 @@
 		48E45DEE1F09384B006EAF6F /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Location.swift; path = Source/Location.swift; sourceTree = "<group>"; };
 		48E45DF01F094506006EAF6F /* LocationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTests.swift; sourceTree = "<group>"; };
 		48F0DCC61F3B3A89004C4943 /* HttpResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpResponseTests.swift; sourceTree = "<group>"; };
+		C79055F320CE86E10057E7F3 /* LoggingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggingService.swift; sourceTree = "<group>"; };
 		DE2440EC1F7FD5D0006E4C0E /* DeviceCollectingFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DeviceCollectingFields.swift; path = Source/DeviceCollectingFields.swift; sourceTree = "<group>"; };
 		DE4B15BC1F8A729A00ABDEC0 /* CollectingFieldsConfigurationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CollectingFieldsConfigurationBuilder.swift; path = Source/CollectingFieldsConfigurationBuilder.swift; sourceTree = "<group>"; };
 		DE71EDCA1F893D590064020A /* LocationCollectingFields.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationCollectingFields.swift; path = Source/LocationCollectingFields.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 		489700D81F04EA5300D8C27C /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				C79055F220CE86A60057E7F3 /* Logger */,
 				485A63EF1F445DD20005F86D /* Config */,
 				4897016D1F05181400D8C27C /* Core */,
 				4832EF451F148423004B3EC2 /* Http */,
@@ -286,6 +289,14 @@
 				48E45DEC1F052E28006EAF6F /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C79055F220CE86A60057E7F3 /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				C79055F320CE86E10057E7F3 /* LoggingService.swift */,
+			);
+			name = Logger;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -430,6 +441,7 @@
 				489700DA1F04EA7D00D8C27C /* OpenLocate.swift in Sources */,
 				DED3CEDB1F7F16AE002DDE5D /* CollectingFields.swift in Sources */,
 				48D6E7F81F38790D00EC76A8 /* Advertising.swift in Sources */,
+				C79055F420CE86E10057E7F3 /* LoggingService.swift in Sources */,
 				48E0EE651F1625F10053BCC3 /* Database.swift in Sources */,
 				48E0EE601F161D6B0053BCC3 /* LocationDataSource.swift in Sources */,
 				DE4B15BD1F8A729A00ABDEC0 /* CollectingFieldsConfigurationBuilder.swift in Sources */,

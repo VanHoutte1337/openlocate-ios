@@ -101,6 +101,7 @@ class LocationService: LocationServiceType {
     
     func start() {
         debugPrint("Location service started for urls : \(endpoints.map({$0.url}))")
+        LoggingService.shared.log("Location service started for urls : \(endpoints.map({$0.url}))")
         
         locationManager.subscribe { [weak self] locations in
             self?.addUpdatedLocations(locations: locations)
