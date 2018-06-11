@@ -119,7 +119,7 @@ extension OpenLocate {
         return LoggingService.shared.getLogs()
     }
     
-    func clearLogging() {
+    public func clearLogging() {
         LoggingService.shared.clear()
     }
     
