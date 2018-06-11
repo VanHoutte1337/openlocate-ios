@@ -185,7 +185,6 @@
 		489700D81F04EA5300D8C27C /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				C79055F220CE86A60057E7F3 /* Logger */,
 				485A63EF1F445DD20005F86D /* Config */,
 				4897016D1F05181400D8C27C /* Core */,
 				4832EF451F148423004B3EC2 /* Http */,
@@ -221,6 +220,7 @@
 		4897016D1F05181400D8C27C /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				C79055F320CE86E10057E7F3 /* LoggingService.swift */,
 				DE71EDCA1F893D590064020A /* LocationCollectingFields.swift */,
 				DED3CEDA1F7F16AE002DDE5D /* CollectingFields.swift */,
 				48E45DEE1F09384B006EAF6F /* Location.swift */,
@@ -289,14 +289,6 @@
 				48E45DEC1F052E28006EAF6F /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		C79055F220CE86A60057E7F3 /* Logger */ = {
-			isa = PBXGroup;
-			children = (
-				C79055F320CE86E10057E7F3 /* LoggingService.swift */,
-			);
-			name = Logger;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
