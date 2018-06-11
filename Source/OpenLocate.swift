@@ -46,7 +46,7 @@ protocol OpenLocateType {
     
     func getLogging() -> String
     func clearLogging()
-    func getExportPath -> URL
+    func getExportPath() -> URL
 }
 
 public class OpenLocate: OpenLocateType {
