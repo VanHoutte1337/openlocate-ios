@@ -12,6 +12,7 @@ protocol LoggingServiceProtocol {
     func log(_ value: String, key: String)
     func clear()
     func getLogs() -> String
+    func getExportPath -> URL
 }
 
 public class LoggingService: LoggingServiceProtocol {
@@ -64,6 +65,10 @@ public class LoggingService: LoggingServiceProtocol {
         }
         
         return ""
+    }
+    
+    func getExportPath() -> URL {
+        return fileURL
     }
 }
 

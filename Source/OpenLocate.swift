@@ -46,6 +46,7 @@ protocol OpenLocateType {
     
     func getLogging() -> String
     func clearLogging()
+    func getExportPath -> URL
 }
 
 public class OpenLocate: OpenLocateType {
@@ -121,6 +122,10 @@ extension OpenLocate {
     
     public func clearLogging() {
         LoggingService.shared.clear()
+    }
+    
+    public func getExportPath() -> URL {
+        return LoggingService.shared.getExportPath()
     }
     
     public var isTrackingEnabled: Bool {
