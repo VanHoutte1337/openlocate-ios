@@ -26,7 +26,10 @@ public class LoggingService: LoggingServiceProtocol {
 
     func log(_ value: String) {
         do {
-            try value.write(to: fileURL, atomically: true, encoding: .utf8)
+            let fileHandle = try FileHandle(forWritingTo: fileURL)
+            fileHandle.seekToEndOfFile()
+            fileHandle.write(value.data(using: .utf8)!)
+            fileHandle.closeFile()
         } catch {
             print("failed with error: \(error)")
         }

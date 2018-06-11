@@ -94,7 +94,7 @@
 		48E45DEE1F09384B006EAF6F /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Location.swift; path = Source/Location.swift; sourceTree = "<group>"; };
 		48E45DF01F094506006EAF6F /* LocationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTests.swift; sourceTree = "<group>"; };
 		48F0DCC61F3B3A89004C4943 /* HttpResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpResponseTests.swift; sourceTree = "<group>"; };
-		C79055F320CE86E10057E7F3 /* LoggingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggingService.swift; sourceTree = "<group>"; };
+		C79055F320CE86E10057E7F3 /* LoggingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoggingService.swift; path = Source/LoggingService.swift; sourceTree = "<group>"; };
 		DE2440EC1F7FD5D0006E4C0E /* DeviceCollectingFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DeviceCollectingFields.swift; path = Source/DeviceCollectingFields.swift; sourceTree = "<group>"; };
 		DE4B15BC1F8A729A00ABDEC0 /* CollectingFieldsConfigurationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CollectingFieldsConfigurationBuilder.swift; path = Source/CollectingFieldsConfigurationBuilder.swift; sourceTree = "<group>"; };
 		DE71EDCA1F893D590064020A /* LocationCollectingFields.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationCollectingFields.swift; path = Source/LocationCollectingFields.swift; sourceTree = "<group>"; };
