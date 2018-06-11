@@ -12,7 +12,7 @@ protocol LoggingServiceProtocol {
     func log(_ value: String, key: String)
     func clear()
     func getLogs() -> String
-    func getExportPath -> URL
+    func getExportPath() -> URL
 }
 
 public class LoggingService: LoggingServiceProtocol {
