@@ -10,6 +10,7 @@ import UIKit
 
 protocol LoggingServiceProtocol {
     func log(_ value: String, key: String)
+    func clear()
     func getLogs() -> String
 }
 
@@ -23,7 +24,7 @@ public class LoggingService: LoggingServiceProtocol {
     init() {
         fileURL = DocumentDirURL.appendingPathComponent(fileName).appendingPathExtension("txt")
     }
-
+    
     func log(_ value: String, key: String = "") {
         do {
             let date = Date().toString(dateFormat:"dd/MM/yy HH:mm:ss")
@@ -40,6 +41,14 @@ public class LoggingService: LoggingServiceProtocol {
                 fileHandle.closeFile()
             }
             
+        } catch {
+            print("failed with error: \(error)")
+        }
+    }
+    
+    func clear() {
+        do {
+            try "".write(to: fileURL, atomically: false, encoding: .utf8)
         } catch {
             print("failed with error: \(error)")
         }

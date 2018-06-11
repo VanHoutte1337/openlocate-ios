@@ -45,6 +45,7 @@ protocol OpenLocateType {
     func getJSON(_ location: OpenLocateLocation) -> Any
     
     func getLogging() -> String
+    func clearLogging()
 }
 
 public class OpenLocate: OpenLocateType {
@@ -118,6 +119,9 @@ extension OpenLocate {
         return LoggingService.shared.getLogs()
     }
     
+    func clearLogging() {
+        LoggingService.shared.clear()
+    }
     
     public var isTrackingEnabled: Bool {
         guard let locationService = self.locationService else { return false }
