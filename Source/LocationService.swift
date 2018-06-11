@@ -118,6 +118,7 @@ class LocationService: LocationServiceType {
     
     // swiftlint:disable notification_center_detachment
     func stop() {
+        LoggingService.shared.log("Location service stopped")
         locationManager.cancel()
         locationDataSource.clear()
         
@@ -165,6 +166,7 @@ extension LocationService {
     }
     
     func postLocationsIfNeeded() {
+        LoggingService.shared.log("Trying to post location")
         if let earliestLocation = locationDataSource.first(), let createdAt = earliestLocation.createdAt,
             abs(createdAt.timeIntervalSinceNow) > self.transmissionInterval {
             
@@ -185,8 +187,12 @@ extension LocationService {
     }
     
     func postData(onComplete: ((Bool) -> Void)? = nil) {
+        LoggingService.shared.log("Starting to post location")
         
-        if isPostingLocations == true || endpoints.isEmpty { return }
+        if isPostingLocations == true || endpoints.isEmpty {
+            LoggingService.shared.log("Stopped posting location because: isPostingLocations = true")
+            return
+        }
         
         isPostingLocations = true
         
@@ -199,6 +205,8 @@ extension LocationService {
             do {
                 let date = lastKnownTransmissionDate(for: endpoint)
                 let locations = locationDataSource.all(starting: date, ending: endingDate)
+                
+                LoggingService.shared.log("Posting locations: \(locations.map { $0.json })")
                 
                 let params = [locationsKey: locations.map { $0.json }]
                 let requestParameters = URLRequestParamters(url: endpoint.url.absoluteString,
@@ -215,8 +223,11 @@ extension LocationService {
                     },
                     failure: { [weak self] _, error in
                         debugPrint("failure in posting locations!!! Error: \(error)")
+                        LoggingService.shared.log("failure in posting locations!!! Error: \(error)")
+                        
                         isSuccessfull = false
                         self?.dispatchGroup.leave()
+                        LoggingService.shared.log("Succesfully posted the locations")
                     }
                 )
             } catch let error {

@@ -101,6 +101,7 @@ extension OpenLocate {
     public func stopTracking() {
         guard let service = locationService else {
             debugPrint("Trying to stop server even if it was never started.")
+            LoggingService.shared.log("Trying to stop server even if it was never started.")
             
             return
         }
@@ -200,6 +201,7 @@ extension OpenLocate {
     private func validateLocationAuthorizationKeys() throws {
         if !LocationService.isAuthorizationKeysValid() {
             debugPrint(OpenLocateError.ErrorMessage.missingAuthorizationKeysMessage)
+            LoggingService.shared.log(OpenLocateError.ErrorMessage.missingAuthorizationKeysMessage)
             throw OpenLocateError.locationMissingAuthorizationKeys(
                 message: OpenLocateError.ErrorMessage.missingAuthorizationKeysMessage
             )

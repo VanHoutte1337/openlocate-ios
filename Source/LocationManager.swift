@@ -147,6 +147,7 @@ final class LocationManager: NSObject, LocationManagerType, CLLocationManagerDel
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         debugPrint(error)
+        LoggingService.shared.log("locationManager - didFailWithError: \(error)")
         
         if let fetchLocationCompletionHandler = self.fetchLocationCompletionHandler {
             fetchLocationCompletionHandler(false)
