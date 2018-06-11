@@ -30,8 +30,8 @@ public class LoggingService: LoggingServiceProtocol {
             
             let date = Date()
             
-//            fileHandle.seekToEndOfFile()
-            fileHandle.write("\(date.debugDescription) - \(value)".data(using: .utf8)!)
+            fileHandle.seekToEndOfFile()
+            fileHandle.write("\(date.debugDescription) - \(value) \n".data(using: .utf8)!)
             fileHandle.closeFile()
         } catch {
             print("failed with error: \(error)")
