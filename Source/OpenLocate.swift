@@ -43,6 +43,8 @@ protocol OpenLocateType {
     func fetchCurrentLocation(completion: LocationCompletionHandler) throws
     
     func getJSON(_ location: OpenLocateLocation) -> Any
+    
+    func getLogging() -> String
 }
 
 public class OpenLocate: OpenLocateType {
@@ -108,6 +110,10 @@ extension OpenLocate {
     
     public func getJSON(_ location: OpenLocateLocation) -> Any {
         return location.json
+    }
+    
+    public func getLogging() -> String {
+        return LoggingService.shared.getLogs()
     }
     
     

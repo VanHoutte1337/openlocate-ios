@@ -13,7 +13,7 @@ protocol LoggingServiceProtocol {
     func getLogs() -> String
 }
 
-class LoggingService: LoggingServiceProtocol {
+public class LoggingService: LoggingServiceProtocol {
     static var shared = LoggingService()
     
     let fileName = "Accurat"
