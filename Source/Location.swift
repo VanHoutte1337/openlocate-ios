@@ -55,6 +55,7 @@ public struct OpenLocateLocation: JsonParameterType, DataType {
         static let altitude = "altitude"
         static let wifiBssid = "wifi_bssid"
         static let wifissid = "wifi_ssid"
+        static let carrierName = "carrier_name"
         static let locationContext = "location_context"
         static let course = "course"
         static let speed = "speed"
@@ -137,6 +138,14 @@ extension OpenLocateLocation {
         if let horizontalAccuracy = locationFields.horizontalAccuracy {
             jsonParameters[Keys.horizontalAccuracy] = horizontalAccuracy
         }
+        
+        if let altitude = locationFields.altitude {
+            jsonParameters[Keys.altitude] = altitude
+        }
+        
+        if let verticalAccuracy = locationFields.verticalAccuracy {
+            jsonParameters[Keys.verticalAccuracy] = verticalAccuracy
+        }
 
         if let bssid = networkInfo.bssid {
             jsonParameters[Keys.wifiBssid] = bssid
@@ -144,6 +153,10 @@ extension OpenLocateLocation {
 
         if let wifissid = networkInfo.ssid {
             jsonParameters[Keys.wifissid] = wifissid
+        }
+
+        if let carrierName = networkInfo.carrierName {
+            jsonParameters[Keys.carrierName] = carrierName
         }
 
         if let course = locationFields.course {
@@ -181,7 +194,7 @@ extension OpenLocateLocation {
             .set(isLimitedAdTrackingEnabled: coding.isLimitedAdTrackingEnabled)
             .build()
 
-        self.networkInfo = NetworkInfo(bssid: coding.bssid, ssid: coding.ssid)
+        self.networkInfo = NetworkInfo(bssid: coding.bssid, ssid: coding.ssid, carrierName: coding.carrierName)
 
         var coordinates: CLLocationCoordinate2D?
         if let latitude = coding.latitude, let longitude = coding.longitude {
@@ -241,6 +254,7 @@ extension OpenLocateLocation {
         let isLimitedAdTrackingEnabled: Bool?
         let bssid: String?
         let ssid: String?
+        let carrierName: String?
         let context: String?
         let course: Double?
         let speed: Double?
@@ -261,6 +275,7 @@ extension OpenLocateLocation {
             isLimitedAdTrackingEnabled = location.advertisingInfo.isLimitedAdTrackingEnabled
             bssid = location.networkInfo.bssid
             ssid = location.networkInfo.ssid
+            carrierName = location.networkInfo.carrierName
             context = location.context.rawValue
             course = location.locationFields.course
             speed = location.locationFields.speed
@@ -282,6 +297,7 @@ extension OpenLocateLocation {
             isLimitedAdTrackingEnabled = decoder.decodeObject(forKey: OpenLocateLocation.Keys.adOptOut) as? Bool
             bssid = decoder.decodeObject(forKey: OpenLocateLocation.Keys.wifiBssid) as? String
             ssid = decoder.decodeObject(forKey: OpenLocateLocation.Keys.wifissid) as? String
+            carrierName = decoder.decodeObject(forKey: OpenLocateLocation.Keys.carrierName) as? String
             context = decoder.decodeObject(forKey: OpenLocateLocation.Keys.locationContext) as? String
             course = decoder.decodeObject(forKey: OpenLocateLocation.Keys.course) as? Double
             speed = decoder.decodeObject(forKey: OpenLocateLocation.Keys.speed) as? Double
@@ -307,6 +323,7 @@ extension OpenLocateLocation {
             aCoder.encode(isLimitedAdTrackingEnabled, forKey: OpenLocateLocation.Keys.adOptOut)
             aCoder.encode(bssid, forKey: OpenLocateLocation.Keys.wifiBssid)
             aCoder.encode(ssid, forKey: OpenLocateLocation.Keys.wifissid)
+            aCoder.encode(carrierName, forKey: OpenLocateLocation.Keys.carrierName)
             aCoder.encode(context, forKey: OpenLocateLocation.Keys.locationContext)
             aCoder.encode(course, forKey: OpenLocateLocation.Keys.course)
             aCoder.encode(speed, forKey: OpenLocateLocation.Keys.speed)

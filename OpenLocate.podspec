@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "OpenLocate"
-  s.version      = "1.3.1"
+  s.version      = "1.4.1"
   s.summary      = "OpenLocate is an open source Android and iOS SDK for mobile location collection."
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.authors      = "OpenLocate"

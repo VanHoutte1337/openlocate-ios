@@ -2,6 +2,18 @@
 
 `OpenLocate-iOS` adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.1](https://github.com/OpenLocate/openlocate-ios/tag/1.4.1)
+
+#### Fixed
+
+- Issue where altitude and vertical accuracy were not being transmitted.
+
+## [1.4.0](https://github.com/OpenLocate/openlocate-ios/tag/1.4.0)
+
+#### Added
+
+- Add carrier name to location data.
+
 ## [1.3.1](https://github.com/OpenLocate/openlocate-ios/tag/1.3.1)
 
 #### Fix
