@@ -139,6 +139,7 @@ class LocationService: LocationServiceType {
 extension LocationService {
     
     private func addUpdatedLocations(locations: [(location: CLLocation, context: OpenLocateLocation.Context)]) {
+        LoggingService.shared.log("Received locations: \(locations.map { return "[\($0.location.coordinate.latitude), \($0.location.coordinate.longitude)]" })")
         self.executionQueue.async { [weak self] in
             guard let strongSelf = self else { return }
             
@@ -172,10 +173,12 @@ extension LocationService {
             
             if let lastTransmissionDate = self.lastTransmissionDate,
                 abs(lastTransmissionDate.timeIntervalSinceNow) < self.transmissionInterval / 2 {
+                LoggingService.shared.log("Stopped trying to post location because: we are still in the same interval")
                 return
             }
             
             if isPostingLocations {
+                LoggingService.shared.log("Stopped trying to post location because: isPostingLocations = true")
                 return
             }
             
@@ -206,8 +209,6 @@ extension LocationService {
                 let date = lastKnownTransmissionDate(for: endpoint)
                 let locations = locationDataSource.all(starting: date, ending: endingDate)
                 
-                LoggingService.shared.log("Posting locations: \(locations.map { $0.json })")
-                
                 let params = [locationsKey: locations.map { $0.json }]
                 let requestParameters = URLRequestParamters(url: endpoint.url.absoluteString,
                                                             params: params,
@@ -220,6 +221,7 @@ extension LocationService {
                             self?.setLastKnownTransmissionDate(for: endpoint, with: createdAt)
                         }
                         self?.dispatchGroup.leave()
+                        LoggingService.shared.log("Succesfully posted \(locations.count) locations")
                     },
                     failure: { [weak self] _, error in
                         debugPrint("failure in posting locations!!! Error: \(error)")
@@ -227,7 +229,6 @@ extension LocationService {
                         
                         isSuccessfull = false
                         self?.dispatchGroup.leave()
-                        LoggingService.shared.log("Succesfully posted the locations")
                     }
                 )
             } catch let error {

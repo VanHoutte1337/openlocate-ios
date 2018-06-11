@@ -9,7 +9,7 @@
 import UIKit
 
 protocol LoggingServiceProtocol {
-    func log(_ value: String)
+    func log(_ value: String, key: String)
     func getLogs() -> String
 }
 
@@ -24,15 +24,22 @@ public class LoggingService: LoggingServiceProtocol {
         fileURL = DocumentDirURL.appendingPathComponent(fileName).appendingPathExtension("txt")
     }
 
-    func log(_ value: String) {
+    func log(_ value: String, key: String = "") {
         do {
-            let fileHandle = try FileHandle(forWritingTo: fileURL)
+            let date = Date().toString(dateFormat:"dd/MM/yy HH:mm:ss")
+            let valueString = "\(date) - \(key.uppercased())\(value) \n"
             
-            let date = Date()
+            let fileManager = FileManager.default
+            if !fileManager.fileExists(atPath: fileURL.path) {
+                try valueString.write(to: fileURL, atomically: false, encoding: .utf8)
+            }
+            else {
+                let fileHandle = try FileHandle(forWritingTo: fileURL)
+                fileHandle.seekToEndOfFile()
+                fileHandle.write(valueString.data(using: .utf8)!)
+                fileHandle.closeFile()
+            }
             
-            fileHandle.seekToEndOfFile()
-            fileHandle.write("\(date.debugDescription) - \(value) \n".data(using: .utf8)!)
-            fileHandle.closeFile()
         } catch {
             print("failed with error: \(error)")
         }
@@ -48,5 +55,15 @@ public class LoggingService: LoggingServiceProtocol {
         }
         
         return ""
+    }
+}
+
+extension Date
+{
+    func toString( dateFormat format  : String ) -> String
+    {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.string(from: self)
     }
 }
