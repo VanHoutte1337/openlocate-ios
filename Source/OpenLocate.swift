@@ -58,6 +58,7 @@ public class OpenLocate: OpenLocateType {
 
 extension OpenLocate {
     private func initLocationService(configuration: Configuration) {
+        LoggingService.shared.log("initLocationService: interval: \(configuration.transmissionInterval)")
         let httpClient = HttpClient()
         
         let locationDataSource: LocationDataSourceType

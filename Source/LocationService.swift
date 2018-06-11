@@ -187,6 +187,7 @@ extension LocationService {
                 self?.postData()
             })
         }
+        LoggingService.shared.log("Stopped trying to post location because: we are still in the same interval")
     }
     
     func postData(onComplete: ((Bool) -> Void)? = nil) {
