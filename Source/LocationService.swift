@@ -58,7 +58,7 @@ class LocationService: LocationServiceType {
     }
     
     var locationManager: LocationManagerType
-    let userActivityManager: UserActivityManager
+    let userActivityManager: UserActivityProtocol?
     private let httpClient: Postable
     private let locationDataSource: LocationDataSourceType
     private var advertisingInfo: AdvertisingInfo
@@ -80,7 +80,7 @@ class LocationService: LocationServiceType {
         locationManager: LocationManagerType,
         transmissionInterval: TimeInterval,
         logConfiguration: CollectingFieldsConfiguration,
-        userActivityManager: UserActivityManager) {
+        userActivityManager: UserActivityProtocol?) {
         
         httpClient = postable
         self.locationDataSource = locationDataSource
@@ -106,7 +106,7 @@ class LocationService: LocationServiceType {
         debugPrint("Location service started for urls : \(endpoints.map({$0.url}))")
         LoggingService.shared.log("Location service started for urls : \(endpoints.map({$0.url}))")
         
-        userActivityManager.start()
+        userActivityManager?.start()
         
         locationManager.subscribe { [weak self] locations in
             self?.addUpdatedLocations(locations: locations)
@@ -126,7 +126,7 @@ class LocationService: LocationServiceType {
         LoggingService.shared.log("Location service stopped")
         locationManager.cancel()
         locationDataSource.clear()
-        userActivityManager.stop()
+        userActivityManager?.stop()
         
         UserDefaults.standard.set(false, forKey: isStartedKey)
         UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
@@ -156,7 +156,7 @@ extension LocationService {
                     .set(location: $0.location)
                     .set(network: NetworkInfo.currentNetworkInfo())
                     .set(deviceInfo: collectingFields)
-                    .set(userInfo: self?.userActivityManager.fetchUserActivity())
+                    .set(userInfo: self?.userActivityManager?.fetchUserActivity())
                     .build()
                 
                 return OpenLocateLocation(timestamp: $0.location.timestamp,

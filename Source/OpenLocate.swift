@@ -52,7 +52,7 @@ protocol OpenLocateType {
 public class OpenLocate: OpenLocateType {
     
     public var locationService: LocationServiceType?
-    var userActivityManager: UserActivityManager?
+    var userActivityManager: UserActivityProtocol?
     
     fileprivate var configuration: Configuration?
     
@@ -75,7 +75,7 @@ extension OpenLocate {
         
         let locationManager = LocationManager(requestAuthorizationStatus: configuration.authorizationStatus)
         
-        let userActivityManager =  UserActivityManager()
+        self.userActivityManager =  UserActivityManager()
         
         self.configuration = configuration
         
@@ -207,6 +207,7 @@ extension OpenLocate {
             .set(location: location)
             .set(network: NetworkInfo.currentNetworkInfo())
             .set(deviceInfo: DeviceCollectingFields.configure(with: fieldsConfiguration))
+            .set(userInfo: self.userActivityManager?.fetchUserActivity())
             .build()
         
         let openlocateLocation = OpenLocateLocation(timestamp: location.timestamp,
