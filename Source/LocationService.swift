@@ -168,18 +168,18 @@ extension LocationService {
     
     func postLocationsIfNeeded() {
         let identifier = Int(arc4random_uniform(1000))
-        LoggingService.shared.log("Trying to post location - \(identifier)")
+        LoggingService.shared.log("\(identifier) || Trying to post location")
         if let earliestLocation = locationDataSource.first(), let createdAt = earliestLocation.createdAt,
             abs(createdAt.timeIntervalSinceNow) > self.transmissionInterval {
             
             if let lastTransmissionDate = self.lastTransmissionDate,
                 abs(lastTransmissionDate.timeIntervalSinceNow) < self.transmissionInterval / 2 {
-                LoggingService.shared.log("Stopped trying to post location because: we are still in the same interval - \(identifier)")
+                LoggingService.shared.log("\(identifier) || Stopped trying to post location because: we are still in the same interval")
                 return
             }
             
             if isPostingLocations {
-                LoggingService.shared.log("Stopped trying to post location because: isPostingLocations = true - \(identifier)")
+                LoggingService.shared.log("\(identifier) || Stopped trying to post location because: isPostingLocations = true")
                 return
             }
             
@@ -189,16 +189,16 @@ extension LocationService {
             })
         }
         else {
-            LoggingService.shared.log("Stopped trying to post location because: we are still in the same interval - \(identifier)")
+            LoggingService.shared.log("\(identifier) || Stopped trying to post location because: we are still in the same interval")
         }
     }
     
     func postData(onComplete: ((Bool) -> Void)? = nil) {
         let identifier = Int(arc4random_uniform(1000))
-        LoggingService.shared.log("Starting to post location - \(identifier)")
+        LoggingService.shared.log("\(identifier) || Starting to post location")
         
         if isPostingLocations == true || endpoints.isEmpty {
-            LoggingService.shared.log("Stopped posting location because: isPostingLocations = true - \(identifier)")
+            LoggingService.shared.log("\(identifier) || Stopped posting location because: isPostingLocations = true")
             return
         }
         
@@ -222,7 +222,7 @@ extension LocationService {
                 try httpClient.post(
                     parameters: requestParameters,
                     success: {  [weak self] _, _ in
-                        LoggingService.shared.log("Successfully posted \(locations.count) locations - \(identifier)")
+                        LoggingService.shared.log("\(identifier) || Successfully posted \(locations.count) locations")
                         if let lastLocation = locations.last, let createdAt = lastLocation.createdAt {
                             self?.setLastKnownTransmissionDate(for: endpoint, with: createdAt)
                         }
