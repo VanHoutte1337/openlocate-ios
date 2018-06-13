@@ -58,6 +58,7 @@ class LocationService: LocationServiceType {
     }
     
     var locationManager: LocationManagerType
+    let userActivityManager: UserActivityManager
     private let httpClient: Postable
     private let locationDataSource: LocationDataSourceType
     private var advertisingInfo: AdvertisingInfo
@@ -78,7 +79,8 @@ class LocationService: LocationServiceType {
         advertisingInfo: AdvertisingInfo,
         locationManager: LocationManagerType,
         transmissionInterval: TimeInterval,
-        logConfiguration: CollectingFieldsConfiguration) {
+        logConfiguration: CollectingFieldsConfiguration,
+        userActivityManager: UserActivityManager) {
         
         httpClient = postable
         self.locationDataSource = locationDataSource
@@ -87,6 +89,7 @@ class LocationService: LocationServiceType {
         self.endpoints = endpoints
         self.transmissionInterval = transmissionInterval
         self.collectingFieldsConfiguration = logConfiguration
+        self.userActivityManager = userActivityManager
         
         if let endpointsInfo = UserDefaults.standard.dictionary(forKey: endpointsInfoKey) as? [String: [String: Any]] {
             self.endpointsInfo = endpointsInfo
@@ -102,6 +105,8 @@ class LocationService: LocationServiceType {
     func start() {
         debugPrint("Location service started for urls : \(endpoints.map({$0.url}))")
         LoggingService.shared.log("Location service started for urls : \(endpoints.map({$0.url}))")
+        
+        userActivityManager.start()
         
         locationManager.subscribe { [weak self] locations in
             self?.addUpdatedLocations(locations: locations)
@@ -121,6 +126,7 @@ class LocationService: LocationServiceType {
         LoggingService.shared.log("Location service stopped")
         locationManager.cancel()
         locationDataSource.clear()
+        userActivityManager.stop()
         
         UserDefaults.standard.set(false, forKey: isStartedKey)
         UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
@@ -150,6 +156,7 @@ extension LocationService {
                     .set(location: $0.location)
                     .set(network: NetworkInfo.currentNetworkInfo())
                     .set(deviceInfo: collectingFields)
+                    .set(userInfo: self?.userActivityManager.fetchUserActivity())
                     .build()
                 
                 return OpenLocateLocation(timestamp: $0.location.timestamp,
@@ -182,7 +189,6 @@ extension LocationService {
                 LoggingService.shared.log("\(identifier) || Stopped trying to post location because: isPostingLocations = true")
                 return
             }
-            
             
             DispatchQueue.main.asyncAfter(deadline: .now(), execute: { [weak self] in
                 self?.postData()

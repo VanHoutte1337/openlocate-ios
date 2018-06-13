@@ -59,6 +59,9 @@ public struct CollectingFieldsConfiguration {
 
     /// Determines whether 'idfa' for identifying Apple device advertising type will be sent. Default value is true.
     public let shouldLogAdId: Bool
+    
+    /// Determines whether motion should be sent. Default value is true.
+    public let shouldLogMotion: Bool
 
     /// Default configuration. All parameters are set to true.
     public static let `default` = CollectingFieldsConfiguration(
@@ -73,6 +76,7 @@ public struct CollectingFieldsConfiguration {
         shouldLogHorizontalAccuracy: true,
         shouldLogVerticalAccuracy: true,
         shouldLogAltitude: true,
-        shouldLogAdId: true
+        shouldLogAdId: true,
+        shouldLogMotion: true
     )
 }

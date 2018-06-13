@@ -62,6 +62,8 @@ public struct OpenLocateLocation: JsonParameterType, DataType {
         static let isCharging = "is_charging"
         static let deviceModel = "device_model"
         static let osVersion = "os_version"
+        static let userActivityType = "user_activity_type"
+        static let userActivityConfidence = "user_activity_confidence"
     }
 
     public enum Context: String {
@@ -83,6 +85,7 @@ public struct OpenLocateLocation: JsonParameterType, DataType {
     public let networkInfo: NetworkInfo
     public let locationFields: LocationCollectingFields
     public let deviceInfo: DeviceCollectingFields
+    public let userInfo: UserCollectingFields
     public let context: Context
     public let timestampReceived: Date?
     var createdAt: Date?
@@ -102,6 +105,7 @@ public struct OpenLocateLocation: JsonParameterType, DataType {
         self.networkInfo = collectingFields.networkInfo
         self.locationFields = collectingFields.locationFields
         self.deviceInfo = collectingFields.deviceInfo
+        self.userInfo = collectingFields.userInfo
         self.context = context
     }
 }
@@ -178,6 +182,18 @@ extension OpenLocateLocation {
         if let osVersion = deviceInfo.osVersion {
             jsonParameters[Keys.osVersion] = osVersion
         }
+        
+        if let userActivityType = userInfo.userActivityType {
+            jsonParameters[Keys.userActivityType] = userActivityType
+        }
+        
+        if let userActivityConfidence = userInfo.userActivityConfidence {
+            jsonParameters[Keys.userActivityConfidence] = userActivityConfidence
+        }
+        
+        if let osVersion = deviceInfo.osVersion {
+            jsonParameters[Keys.osVersion] = osVersion
+        }
 
         return jsonParameters
     }
@@ -220,6 +236,8 @@ extension OpenLocateLocation {
         self.deviceInfo = DeviceCollectingFields(isCharging: coding.isCharging,
                                                  deviceModel: coding.deviceModel,
                                                  osVersion: coding.osVersion)
+        
+        self.userInfo = UserCollectingFields(userActivityType: coding.userActivityType, userActivityConfidence: coding.userActivityConfidence)
 
         if let contextString = coding.context, let context = Context(rawValue: contextString) {
             self.context = context
@@ -261,6 +279,8 @@ extension OpenLocateLocation {
         let isCharging: Bool?
         let deviceModel: String?
         let osVersion: String?
+        let userActivityType: String?
+        let userActivityConfidence: Int?
 
         init(_ location: OpenLocateLocation) {
             privateTimestamp = location.timestamp.timeIntervalSince1970
@@ -282,7 +302,9 @@ extension OpenLocateLocation {
             isCharging = location.deviceInfo.isCharging
             deviceModel = location.deviceInfo.deviceModel
             osVersion = location.deviceInfo.osVersion
-
+            userActivityType = location.userInfo.userActivityType
+            userActivityConfidence = location.userInfo.userActivityConfidence
+            
             super.init()
         }
 
@@ -308,7 +330,9 @@ extension OpenLocateLocation {
                 = decoder.decodeObject(forKey: OpenLocateLocation.Keys.horizontalAccuracy) as? CLLocationAccuracy
             verticalAccuracy
                 = decoder.decodeObject(forKey: OpenLocateLocation.Keys.verticalAccuracy) as? CLLocationAccuracy
-
+            userActivityType = decoder.decodeObject(forKey: OpenLocateLocation.Keys.userActivityType) as? String
+            userActivityConfidence = decoder.decodeObject(forKey: OpenLocateLocation.Keys.userActivityConfidence) as? Int
+            
             super.init()
         }
 
@@ -332,6 +356,8 @@ extension OpenLocateLocation {
             aCoder.encode(osVersion, forKey: OpenLocateLocation.Keys.osVersion)
             aCoder.encode(horizontalAccuracy, forKey: OpenLocateLocation.Keys.horizontalAccuracy)
             aCoder.encode(verticalAccuracy, forKey: OpenLocateLocation.Keys.verticalAccuracy)
+            aCoder.encode(userActivityType, forKey: OpenLocateLocation.Keys.userActivityType)
+            aCoder.encode(userActivityConfidence, forKey: OpenLocateLocation.Keys.userActivityConfidence)
         }
     }
 }

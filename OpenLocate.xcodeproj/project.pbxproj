@@ -38,6 +38,8 @@
 		48E45DEF1F09384C006EAF6F /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E45DEE1F09384B006EAF6F /* Location.swift */; };
 		48E45DF11F094506006EAF6F /* LocationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E45DF01F094506006EAF6F /* LocationTests.swift */; };
 		48F0DCC71F3B3A89004C4943 /* HttpResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F0DCC61F3B3A89004C4943 /* HttpResponseTests.swift */; };
+		C719330420D1505000F575BE /* UserCollectingFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = C719330320D1505000F575BE /* UserCollectingFields.swift */; };
+		C719330620D1536700F575BE /* UserActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C719330520D1536700F575BE /* UserActivityManager.swift */; };
 		C79055F420CE86E10057E7F3 /* LoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79055F320CE86E10057E7F3 /* LoggingService.swift */; };
 		DE2440ED1F7FD5D0006E4C0E /* DeviceCollectingFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2440EC1F7FD5D0006E4C0E /* DeviceCollectingFields.swift */; };
 		DE4B15BD1F8A729A00ABDEC0 /* CollectingFieldsConfigurationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4B15BC1F8A729A00ABDEC0 /* CollectingFieldsConfigurationBuilder.swift */; };
@@ -94,6 +96,8 @@
 		48E45DEE1F09384B006EAF6F /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Location.swift; path = Source/Location.swift; sourceTree = "<group>"; };
 		48E45DF01F094506006EAF6F /* LocationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTests.swift; sourceTree = "<group>"; };
 		48F0DCC61F3B3A89004C4943 /* HttpResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpResponseTests.swift; sourceTree = "<group>"; };
+		C719330320D1505000F575BE /* UserCollectingFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserCollectingFields.swift; path = Source/UserCollectingFields.swift; sourceTree = "<group>"; };
+		C719330520D1536700F575BE /* UserActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserActivityManager.swift; path = Source/UserActivityManager.swift; sourceTree = "<group>"; };
 		C79055F320CE86E10057E7F3 /* LoggingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoggingService.swift; path = Source/LoggingService.swift; sourceTree = "<group>"; };
 		DE2440EC1F7FD5D0006E4C0E /* DeviceCollectingFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DeviceCollectingFields.swift; path = Source/DeviceCollectingFields.swift; sourceTree = "<group>"; };
 		DE4B15BC1F8A729A00ABDEC0 /* CollectingFieldsConfigurationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CollectingFieldsConfigurationBuilder.swift; path = Source/CollectingFieldsConfigurationBuilder.swift; sourceTree = "<group>"; };
@@ -232,6 +236,8 @@
 				48D6E7F71F38790D00EC76A8 /* Advertising.swift */,
 				111E607E1F758494004B2D20 /* NetworkInfo.swift */,
 				DE2440EC1F7FD5D0006E4C0E /* DeviceCollectingFields.swift */,
+				C719330320D1505000F575BE /* UserCollectingFields.swift */,
+				C719330520D1536700F575BE /* UserActivityManager.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -427,11 +433,13 @@
 				4832EF471F14852F004B3EC2 /* HttpRequest.swift in Sources */,
 				111E607F1F758494004B2D20 /* NetworkInfo.swift in Sources */,
 				48E45DEF1F09384C006EAF6F /* Location.swift in Sources */,
+				C719330420D1505000F575BE /* UserCollectingFields.swift in Sources */,
 				48D134671F0A3DAE0075EFBC /* Dictionary+Extensions.swift in Sources */,
 				DE2440ED1F7FD5D0006E4C0E /* DeviceCollectingFields.swift in Sources */,
 				4876E9601F09EB45006EF61C /* LocationService.swift in Sources */,
 				489700DA1F04EA7D00D8C27C /* OpenLocate.swift in Sources */,
 				DED3CEDB1F7F16AE002DDE5D /* CollectingFields.swift in Sources */,
+				C719330620D1536700F575BE /* UserActivityManager.swift in Sources */,
 				48D6E7F81F38790D00EC76A8 /* Advertising.swift in Sources */,
 				C79055F420CE86E10057E7F3 /* LoggingService.swift in Sources */,
 				48E0EE651F1625F10053BCC3 /* Database.swift in Sources */,

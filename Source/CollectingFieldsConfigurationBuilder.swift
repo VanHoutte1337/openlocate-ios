@@ -38,6 +38,7 @@ public extension CollectingFieldsConfiguration {
         private var shouldLogVerticalAccuracy = true
         private var shouldLogAltitude = true
         private var shouldLogAdId = true
+        private var shouldLogMotion = true
 
         public init() {}
 
@@ -112,6 +113,12 @@ public extension CollectingFieldsConfiguration {
 
             return self
         }
+        
+        public func set(shouldLogMotionType: Bool) -> Builder {
+            self.shouldLogMotion = shouldLogMotionType
+            
+            return self
+        }
 
         public func build() -> CollectingFieldsConfiguration {
             return CollectingFieldsConfiguration(shouldLogNetworkInfo: shouldLogNetworkInfo,
@@ -125,7 +132,8 @@ public extension CollectingFieldsConfiguration {
                                                  shouldLogHorizontalAccuracy: shouldLogHorizontalAccuracy,
                                                  shouldLogVerticalAccuracy: shouldLogVerticalAccuracy,
                                                  shouldLogAltitude: shouldLogAltitude,
-                                                 shouldLogAdId: shouldLogAdId)
+                                                 shouldLogAdId: shouldLogAdId,
+                                                 shouldLogMotion:shouldLogMotion)
         }
     }
 }

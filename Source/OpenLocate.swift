@@ -52,6 +52,7 @@ protocol OpenLocateType {
 public class OpenLocate: OpenLocateType {
     
     public var locationService: LocationServiceType?
+    var userActivityManager: UserActivityManager?
     
     fileprivate var configuration: Configuration?
     
@@ -74,6 +75,8 @@ extension OpenLocate {
         
         let locationManager = LocationManager(requestAuthorizationStatus: configuration.authorizationStatus)
         
+        let userActivityManager =  UserActivityManager()
+        
         self.configuration = configuration
         
         self.locationService = LocationService(
@@ -83,7 +86,8 @@ extension OpenLocate {
             advertisingInfo: advertisingInfo,
             locationManager: locationManager,
             transmissionInterval: configuration.transmissionInterval,
-            logConfiguration: configuration.collectingFieldsConfiguration
+            logConfiguration: configuration.collectingFieldsConfiguration,
+            userActivityManager: userActivityManager
         )
         
         if let locationService = self.locationService, locationService.isStarted {

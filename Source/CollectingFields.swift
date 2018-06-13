@@ -29,13 +29,16 @@ struct CollectingFields {
     let networkInfo: NetworkInfo
     let locationFields: LocationCollectingFields
     let deviceInfo: DeviceCollectingFields
+    let userInfo: UserCollectingFields
 
     private init(networkInfo: NetworkInfo,
                  locationFields: LocationCollectingFields,
-                 deviceInfo: DeviceCollectingFields) {
+                 deviceInfo: DeviceCollectingFields,
+                 userInfo: UserCollectingFields) {
         self.networkInfo = networkInfo
         self.locationFields = locationFields
         self.deviceInfo = deviceInfo
+        self.userInfo = userInfo
     }
 }
 
@@ -46,6 +49,7 @@ extension CollectingFields {
         private var location: CLLocation?
         private var deviceInfo: DeviceCollectingFields?
         private var networkInfo: NetworkInfo = .currentNetworkInfo()
+        private var userInfo: UserCollectingFields?
 
         init(configuration: CollectingFieldsConfiguration) {
             self.configuration = configuration
@@ -66,6 +70,12 @@ extension CollectingFields {
         func set(deviceInfo: DeviceCollectingFields) -> Builder {
             self.deviceInfo = deviceInfo
 
+            return self
+        }
+        
+        func set(userInfo: UserCollectingFields?) -> Builder {
+            self.userInfo = userInfo
+            
             return self
         }
 
@@ -90,10 +100,12 @@ extension CollectingFields {
                                            altitude: altitude)
 
             let deviceInfo = self.deviceInfo ?? DeviceCollectingFields.configure(with: configuration)
-
+            let userInfo = self.userInfo ?? UserCollectingFields()
+            
             return CollectingFields(networkInfo: networkInfo,
                                     locationFields: deviceLocationInfo,
-                                    deviceInfo: deviceInfo)
+                                    deviceInfo: deviceInfo,
+                                    userInfo: userInfo)
         }
     }
 }
