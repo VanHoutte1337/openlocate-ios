@@ -139,7 +139,7 @@ class LocationService: LocationServiceType {
 extension LocationService {
     
     private func addUpdatedLocations(locations: [(location: CLLocation, context: OpenLocateLocation.Context)]) {
-        LoggingService.shared.log("Received locations: \(locations.map { return "[\($0.location.coordinate.latitude), \($0.location.coordinate.longitude)]" })")
+        LoggingService.shared.log("Received locations: \(locations.map { return "\($0.context.rawValue) - [\($0.location.coordinate.latitude), \($0.location.coordinate.longitude)]" })")
         self.executionQueue.async { [weak self] in
             guard let strongSelf = self else { return }
             
@@ -167,18 +167,19 @@ extension LocationService {
     }
     
     func postLocationsIfNeeded() {
-        LoggingService.shared.log("Trying to post location")
+        let identifier = Int(arc4random_uniform(1000))
+        LoggingService.shared.log("Trying to post location - \(identifier)")
         if let earliestLocation = locationDataSource.first(), let createdAt = earliestLocation.createdAt,
             abs(createdAt.timeIntervalSinceNow) > self.transmissionInterval {
             
             if let lastTransmissionDate = self.lastTransmissionDate,
                 abs(lastTransmissionDate.timeIntervalSinceNow) < self.transmissionInterval / 2 {
-                LoggingService.shared.log("Stopped trying to post location because: we are still in the same interval")
+                LoggingService.shared.log("Stopped trying to post location because: we are still in the same interval - \(identifier)")
                 return
             }
             
             if isPostingLocations {
-                LoggingService.shared.log("Stopped trying to post location because: isPostingLocations = true")
+                LoggingService.shared.log("Stopped trying to post location because: isPostingLocations = true - \(identifier)")
                 return
             }
             
@@ -188,15 +189,16 @@ extension LocationService {
             })
         }
         else {
-            LoggingService.shared.log("Stopped trying to post location because: we are still in the same interval")
+            LoggingService.shared.log("Stopped trying to post location because: we are still in the same interval - \(identifier)")
         }
     }
     
     func postData(onComplete: ((Bool) -> Void)? = nil) {
-        LoggingService.shared.log("Starting to post location")
+        let identifier = Int(arc4random_uniform(1000))
+        LoggingService.shared.log("Starting to post location - \(identifier)")
         
         if isPostingLocations == true || endpoints.isEmpty {
-            LoggingService.shared.log("Stopped posting location because: isPostingLocations = true")
+            LoggingService.shared.log("Stopped posting location because: isPostingLocations = true - \(identifier)")
             return
         }
         
@@ -220,7 +222,7 @@ extension LocationService {
                 try httpClient.post(
                     parameters: requestParameters,
                     success: {  [weak self] _, _ in
-                        LoggingService.shared.log("Succesfully posted \(locations.count) locations")
+                        LoggingService.shared.log("Successfully posted \(locations.count) locations - \(identifier)")
                         if let lastLocation = locations.last, let createdAt = lastLocation.createdAt {
                             self?.setLastKnownTransmissionDate(for: endpoint, with: createdAt)
                         }
@@ -228,7 +230,7 @@ extension LocationService {
                     },
                     failure: { [weak self] _, error in
                         debugPrint("failure in posting locations!!! Error: \(error)")
-                        LoggingService.shared.log("failure in posting locations!!! Error: \(error)")
+                        LoggingService.shared.log("failure in posting locations - \(identifier)!!! Error: \(error)")
                         
                         isSuccessfull = false
                         self?.dispatchGroup.leave()

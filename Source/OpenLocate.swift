@@ -135,14 +135,19 @@ extension OpenLocate {
     }
     
     public func performFetchWithCompletionHandler(_ completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        LoggingService.shared.log("Background fetch initiated")
         guard let locationService = self.locationService, locationService.isStarted else {
+            LoggingService.shared.log("Background fetch: No data")
             completionHandler(.noData)
             return
         }
+        
         locationService.backgroundFetchLocation { (success) in
             if success {
+                LoggingService.shared.log("Background fetch: New data")
                 completionHandler(.newData)
             } else {
+                LoggingService.shared.log("Background fetch: No data")
                 completionHandler(.noData)
             }
         }
