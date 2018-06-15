@@ -204,6 +204,8 @@ final class LocationDatabase: LocationDataSourceType {
             .set(args: [starting, ending])
             .set(cached: true)
             .build()
+        
+        LoggingService.shared.log("Getting locations with the following query: \(statement.query)")
 
         var locations = [OpenLocateLocation]()
         do {
