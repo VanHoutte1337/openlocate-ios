@@ -62,8 +62,19 @@ final class LocationDatabase: LocationDataSourceType {
             .set(query: query)
             .set(args: [location.data])
             .build()
-
-        try database.execute(statement: statement)
+        
+        
+        guard let lastLocation = last() else {
+            try database.execute(statement: statement)
+            return
+        }
+        
+        if(lastLocation != location) {
+            try database.execute(statement: statement)
+        }
+        else {
+            LoggingService.shared.log("Skipping location because of duplicate: [\(location.locationFields.coordinates?.longitude ?? 0.0),\(location.locationFields.coordinates?.latitude ?? 0.0)]")
+        }
     }
 
     func addAll(locations: [OpenLocateLocation]) {
@@ -164,6 +175,30 @@ final class LocationDatabase: LocationDataSourceType {
 
         return nil
     }
+    
+    func last() -> OpenLocateLocation? {
+        let query = "SELECT * FROM \(Constants.tableName) ORDER BY created_at DESC LIMIT 1"
+        let statement = SQLStatement.Builder()
+            .set(query: query)
+            .set(cached: true)
+            .build()
+        
+        do {
+            let result = try database.execute(statement: statement)
+            if result.next() {
+                let data = result.dataValue(column: Constants.columnLocation)
+                let createdAtDate = result.dateValue(column: Constants.columnCreatedAt)
+                
+                if let data = data, let createdAtDate = createdAtDate {
+                    return try OpenLocateLocation(data: data, createdAt: createdAtDate)
+                }
+            }
+        } catch let error {
+            debugPrint(error.localizedDescription)
+        }
+        
+        return nil
+    }
 
     func all() -> [OpenLocateLocation] {
         let query = "SELECT * FROM \(Constants.tableName) ORDER BY created_at ASC"
@@ -204,8 +239,6 @@ final class LocationDatabase: LocationDataSourceType {
             .set(args: [starting])
             .set(cached: true)
             .build()
-        
-        LoggingService.shared.log("Getting locations with the following query: \(statement.query)")
 
         var locations = [OpenLocateLocation]()
         do {
@@ -281,6 +314,7 @@ final class LocationDatabase: LocationDataSourceType {
 }
 
 final class LocationList: LocationDataSourceType {
+
     private var locations: [OpenLocateLocation]
 
     var count: Int {

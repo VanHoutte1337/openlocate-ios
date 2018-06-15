@@ -361,3 +361,16 @@ extension OpenLocateLocation {
         }
     }
 }
+
+extension OpenLocateLocation: Equatable {
+    public static func == (lhs: OpenLocateLocation, rhs: OpenLocateLocation) -> Bool {
+        return lhs.context == rhs.context
+        && lhs.createdAt == rhs.createdAt
+        && lhs.locationFields.coordinates?.latitude == rhs.locationFields.coordinates?.latitude
+        && lhs.locationFields.coordinates?.longitude == rhs.locationFields.coordinates?.longitude
+        && lhs.locationFields.horizontalAccuracy == rhs.locationFields.horizontalAccuracy
+        && lhs.locationFields.verticalAccuracy == rhs.locationFields.verticalAccuracy
+    }
+    
+    
+}
