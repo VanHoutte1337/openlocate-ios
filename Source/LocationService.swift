@@ -213,13 +213,13 @@ extension LocationService {
         beginBackgroundTask()
         
         var isSuccessfull = true
-        let endingDate = Calendar.current.date(byAdding: .second, value: -1, to: Date()) ?? Date()
+//        let endingDate = Calendar.current.date(byAdding: .second, value: -1, to: Date()) ?? Date()
         for endpoint in endpoints {
             dispatchGroup.enter()
             do {
                 let date = lastKnownTransmissionDate(for: endpoint)
-                LoggingService.shared.log("\(identifier) || Getting location starting: \(date.toString(dateFormat:"dd/MM/yy HH:mm:ss")) and ending: \(endingDate.toString(dateFormat:"dd/MM/yy HH:mm:ss"))")
-                let locations = locationDataSource.all(starting: date, ending: endingDate)
+                LoggingService.shared.log("\(identifier) || Getting location starting: \(date.toString(dateFormat:"dd/MM/yy HH:mm:ss"))")
+                let locations = locationDataSource.all(starting: date)
                 
                 let params = [locationsKey: locations.map { $0.json }]
                 let requestParameters = URLRequestParamters(url: endpoint.url.absoluteString,
