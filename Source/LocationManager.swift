@@ -59,7 +59,7 @@ final class LocationManager: NSObject, LocationManagerType, CLLocationManagerDel
         super.init()
         
         manager.delegate = self
-        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
     }
     
     static func authorizationStatus() -> CLAuthorizationStatus {
@@ -88,12 +88,12 @@ final class LocationManager: NSObject, LocationManagerType, CLLocationManagerDel
             date = visit.departureDate
             context = .visitExit
             
-            stopMonitoringVisitRegion()
+//            stopMonitoringVisitRegion()
         } else if visit.arrivalDate != Date.distantPast {
             date = visit.arrivalDate
             context = .visitEntry
             
-            startMonitoringVisitRegion(with: visit.coordinate, maxRadius: visit.horizontalAccuracy)
+//            startMonitoringVisitRegion(with: visit.coordinate, maxRadius: visit.horizontalAccuracy)
         }
         
         let location = CLLocation(coordinate: visit.coordinate,
@@ -139,9 +139,10 @@ final class LocationManager: NSObject, LocationManagerType, CLLocationManagerDel
             for request in requests {
                 request([(location: location, context: OpenLocateLocation.Context.geofenceExit)])
             }
-            if manager.monitoredRegions.contains(region) {
-                startMonitoringVisitRegion(with: location.coordinate, maxRadius: location.horizontalAccuracy)
-            }
+            
+//            if manager.monitoredRegions.contains(region) {
+//                startMonitoringVisitRegion(with: location.coordinate, maxRadius: location.horizontalAccuracy)
+//            }
         }
     }
     

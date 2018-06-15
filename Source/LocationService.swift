@@ -106,7 +106,7 @@ class LocationService: LocationServiceType {
         debugPrint("Location service started for urls : \(endpoints.map({$0.url}))")
         LoggingService.shared.log("Location service started for urls : \(endpoints.map({$0.url}))")
         
-        userActivityManager.start()
+//        userActivityManager.start()
         
         locationManager.subscribe { [weak self] locations in
             self?.addUpdatedLocations(locations: locations)
@@ -126,7 +126,7 @@ class LocationService: LocationServiceType {
         LoggingService.shared.log("Location service stopped")
         locationManager.cancel()
         locationDataSource.clear()
-        userActivityManager.stop()
+//        userActivityManager.stop()
         
         UserDefaults.standard.set(false, forKey: isStartedKey)
         UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
@@ -218,6 +218,7 @@ extension LocationService {
             dispatchGroup.enter()
             do {
                 let date = lastKnownTransmissionDate(for: endpoint)
+                LoggingService.shared.log("\(identifier) || Getting location starting: \(date.toString(dateFormat:"dd/MM/yy HH:mm:ss")) and ending: \(endingDate.toString(dateFormat:"dd/MM/yy HH:mm:ss"))")
                 let locations = locationDataSource.all(starting: date, ending: endingDate)
                 
                 let params = [locationsKey: locations.map { $0.json }]

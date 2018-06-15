@@ -40,7 +40,7 @@ final class OpenLocateLocationTests: BaseTestCase {
         )
 
         let adInfo = AdvertisingInfo.Builder().set(advertisingId: "2345").set(isLimitedAdTrackingEnabled: true).build()
-        let networkInfo = NetworkInfo(bssid: "bssid_goes_here", ssid: "ssid_goes_here")
+        let networkInfo = NetworkInfo(bssid: "bssid_goes_here", ssid: "ssid_goes_here", carrierName: "carrier_goes_here")
         let deviceInfo = DeviceCollectingFields(isCharging: false,
                                                 deviceModel: "iPhone 7 Plus",
                                                 osVersion: "iOS 11.0.1")
