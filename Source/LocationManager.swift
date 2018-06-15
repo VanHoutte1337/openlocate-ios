@@ -127,23 +127,23 @@ final class LocationManager: NSObject, LocationManagerType, CLLocationManagerDel
     }
     
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        if let location = manager.location {
-            for request in requests {
-                request([(location: location, context: OpenLocateLocation.Context.geofenceEntry)])
-            }
-        }
+//        if let location = manager.location {
+//            for request in requests {
+//                request([(location: location, context: OpenLocateLocation.Context.geofenceEntry)])
+//            }
+//        }
     }
     
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-        if let location = manager.location {
-            for request in requests {
-                request([(location: location, context: OpenLocateLocation.Context.geofenceExit)])
-            }
-            
+//        if let location = manager.location {
+//            for request in requests {
+//                request([(location: location, context: OpenLocateLocation.Context.geofenceExit)])
+//            }
+//
 //            if manager.monitoredRegions.contains(region) {
 //                startMonitoringVisitRegion(with: location.coordinate, maxRadius: location.horizontalAccuracy)
 //            }
-        }
+//        }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
