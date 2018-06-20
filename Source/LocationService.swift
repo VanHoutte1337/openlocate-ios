@@ -176,6 +176,8 @@ extension LocationService {
     func postLocationsIfNeeded() {
         let identifier = Int(arc4random_uniform(1000))
         LoggingService.shared.log("\(identifier) || Trying to post location")
+        
+        // The transmission is compared the createdAt of the first location received after a successfull transmission
         if let earliestLocation = locationDataSource.first(), let createdAt = earliestLocation.createdAt,
             abs(createdAt.timeIntervalSinceNow) > self.transmissionInterval {
             
