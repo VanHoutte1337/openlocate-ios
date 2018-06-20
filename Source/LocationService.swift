@@ -180,8 +180,8 @@ extension LocationService {
             abs(createdAt.timeIntervalSinceNow) > self.transmissionInterval {
             
             if let lastTransmissionDate = self.lastTransmissionDate,
-                abs(lastTransmissionDate.timeIntervalSinceNow) < self.transmissionInterval / 2 {
-                LoggingService.shared.log("\(identifier) || Stopped trying to post location because: we are still in the same interval")
+                abs(lastTransmissionDate.timeIntervalSinceNow) < self.transmissionInterval {
+                LoggingService.shared.log("\(identifier) || Stopped trying to post location because: last transmission date is lower then. (\(abs(lastTransmissionDate.timeIntervalSinceNow)) < \(self.transmissionInterval))")
                 return
             }
             
@@ -195,7 +195,11 @@ extension LocationService {
             })
         }
         else {
-            LoggingService.shared.log("\(identifier) || Stopped trying to post location because: we are still in the same interval")
+            guard let earliestLocation = locationDataSource.first(), let createdAt = earliestLocation.createdAt else {
+                LoggingService.shared.log("\(identifier) || Stopped trying to post location because: locationDataSource.first() is empty")
+                return
+            }
+            LoggingService.shared.log("\(identifier) || Stopped trying to post location because: last location time is greater than transmission interval (\(abs(createdAt.timeIntervalSinceNow)) > \(self.transmissionInterval))")
         }
     }
     
