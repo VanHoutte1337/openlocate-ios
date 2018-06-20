@@ -181,7 +181,7 @@ extension LocationService {
             
             if let lastTransmissionDate = self.lastTransmissionDate,
                 abs(lastTransmissionDate.timeIntervalSinceNow) < self.transmissionInterval {
-                LoggingService.shared.log("\(identifier) || Stopped trying to post location because: last transmission date is lower then. (\(abs(lastTransmissionDate.timeIntervalSinceNow)) < \(self.transmissionInterval))")
+                LoggingService.shared.log("\(identifier) || Stopped trying to post location because: last transmission date is lower than transmission interval (\(abs(lastTransmissionDate.timeIntervalSinceNow)) < \(self.transmissionInterval))")
                 return
             }
             
