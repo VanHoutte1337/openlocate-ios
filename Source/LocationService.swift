@@ -199,7 +199,7 @@ extension LocationService {
                 LoggingService.shared.log("\(identifier) || Stopped trying to post location because: locationDataSource.first() is empty")
                 return
             }
-            LoggingService.shared.log("\(identifier) || Stopped trying to post location because: last location time is greater than transmission interval (\(abs(createdAt.timeIntervalSinceNow)) > \(self.transmissionInterval))")
+            LoggingService.shared.log("\(identifier) || Stopped trying to post location because: last location time is lower than transmission interval (\(abs(createdAt.timeIntervalSinceNow)) < \(self.transmissionInterval))")
         }
     }
     
