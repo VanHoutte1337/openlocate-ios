@@ -106,7 +106,7 @@ class LocationService: LocationServiceType {
         debugPrint("Location service started for urls : \(endpoints.map({$0.url}))")
         LoggingService.shared.log("Location service started for urls : \(endpoints.map({$0.url}))")
         
-//        userActivityManager.start()
+        //        userActivityManager.start()
         
         locationManager.subscribe { [weak self] locations in
             self?.addUpdatedLocations(locations: locations)
@@ -126,7 +126,7 @@ class LocationService: LocationServiceType {
         LoggingService.shared.log("Location service stopped")
         locationManager.cancel()
         locationDataSource.clear()
-//        userActivityManager.stop()
+        //        userActivityManager.stop()
         
         UserDefaults.standard.set(false, forKey: isStartedKey)
         UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
@@ -177,32 +177,20 @@ extension LocationService {
         let identifier = Int(arc4random_uniform(1000))
         LoggingService.shared.log("\(identifier) || Trying to post location")
         
-        // The transmission is compared the createdAt of the first location received after a successfull transmission
-        if let earliestLocation = locationDataSource.first(), let createdAt = earliestLocation.createdAt,
-            abs(createdAt.timeIntervalSinceNow) > self.transmissionInterval {
-            
-            if let lastTransmissionDate = self.lastTransmissionDate,
-                abs(lastTransmissionDate.timeIntervalSinceNow) < self.transmissionInterval {
-                LoggingService.shared.log("\(identifier) || Stopped trying to post location because: last transmission (\(lastTransmissionDate.toString(dateFormat:"dd/MM/yy HH:mm:ss"))) date is lower than transmission interval (\(abs(lastTransmissionDate.timeIntervalSinceNow)) < \(self.transmissionInterval))")
-                return
-            }
-            
-            if isPostingLocations {
-                LoggingService.shared.log("\(identifier) || Stopped trying to post location because: isPostingLocations = true")
-                return
-            }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now(), execute: { [weak self] in
-                self?.postData()
-            })
+        if let lastTransmissionDate = self.lastTransmissionDate,
+            abs(lastTransmissionDate.timeIntervalSinceNow) < self.transmissionInterval {
+            LoggingService.shared.log("\(identifier) || Stopped trying to post location because: last transmission (\(lastTransmissionDate.toString(dateFormat:"dd/MM/yy HH:mm:ss"))) date is still in the same transmission interval")
+            return
         }
-        else {
-            guard let earliestLocation = locationDataSource.first(), let createdAt = earliestLocation.createdAt else {
-                LoggingService.shared.log("\(identifier) || Stopped trying to post location because: locationDataSource.first() is empty")
-                return
-            }
-            LoggingService.shared.log("\(identifier) || Stopped trying to post location because: first location createdAt (\(createdAt.toString(dateFormat:"dd/MM/yy HH:mm:ss"))) time is lower than transmission interval (\(abs(createdAt.timeIntervalSinceNow)) < \(self.transmissionInterval))")
+        
+        if isPostingLocations {
+            LoggingService.shared.log("\(identifier) || Stopped trying to post location because: isPostingLocations = true")
+            return
         }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now(), execute: { [weak self] in
+            self?.postData()
+        })
     }
     
     func postData(onComplete: ((Bool) -> Void)? = nil) {
@@ -219,7 +207,7 @@ extension LocationService {
         beginBackgroundTask()
         
         var isSuccessfull = true
-//        let endingDate = Calendar.current.date(byAdding: .second, value: -1, to: Date()) ?? Date()
+        //        let endingDate = Calendar.current.date(byAdding: .second, value: -1, to: Date()) ?? Date()
         for endpoint in endpoints {
             dispatchGroup.enter()
             do {
