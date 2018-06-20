@@ -64,12 +64,8 @@ final class LocationDatabase: LocationDataSourceType {
             .build()
         
         
-        guard let lastLocation = last() else {
-            try database.execute(statement: statement)
-            return
-        }
-        
-        if(lastLocation != location) {
+        let lastTenLocations = last(10)
+        if(!lastTenLocations.contains(location)) {
             try database.execute(statement: statement)
         }
         else {
@@ -198,6 +194,35 @@ final class LocationDatabase: LocationDataSourceType {
         }
         
         return nil
+    }
+    
+    func last(_ limit: Int) -> [OpenLocateLocation] {
+        let query = "SELECT * FROM \(Constants.tableName) ORDER BY created_at DESC LIMIT ?"
+        let statement = SQLStatement.Builder()
+            .set(query: query)
+            .set(args: [limit])
+            .set(cached: true)
+            .build()
+        
+        var locations = [OpenLocateLocation]()
+        do {
+            let result = try database.execute(statement: statement)
+            while result.next() {
+                
+                let data = result.dataValue(column: Constants.columnLocation)
+                let createdAtDate = result.dateValue(column: Constants.columnCreatedAt)
+                
+                if let data = data, let createdAtDate = createdAtDate {
+                    locations.append(
+                        try OpenLocateLocation(data: data, createdAt: createdAtDate)
+                    )
+                }
+            }
+        } catch let error {
+            debugPrint(error.localizedDescription)
+        }
+        
+        return locations
     }
 
     func all() -> [OpenLocateLocation] {
